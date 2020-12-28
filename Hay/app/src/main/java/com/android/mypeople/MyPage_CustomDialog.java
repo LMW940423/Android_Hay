@@ -23,7 +23,7 @@ public class MyPage_CustomDialog extends Dialog {
         this.context = context;
         this.seq = seq;
         this.ipurl = ipurl;
-
+//테스트1
     }
 
     public void callFunction(final String userDeleteMessage) {
