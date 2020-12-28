@@ -37,6 +37,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+    //
     private RecyclerView listView = null;
     private RecyclerView.LayoutManager layoutManager = null;
     private ArrayList<Bean_friendslist> data = null;
