@@ -19,7 +19,7 @@ import android.widget.Toast;
 import java.util.regex.Pattern;
 
 public class JoinUsActivity extends AppCompatActivity {
-
+    //
     final static String TAG = "JoinUsActivty";
     EditText et_id;
     Button btn_continue;
