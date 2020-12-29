@@ -86,8 +86,8 @@
             android:id="@+id/joinadd_tv_pw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=""
-            android:textColor="#4CAF50"
+            android:text="8글자이상, 특수문자와 대문자가 포함되어야 합니다."
+            android:textColor="@color/input_register"
             android:layout_marginLeft="10dp"
 
             />
@@ -168,7 +168,7 @@
             android:textColor="@color/input_register"
             android:textColorHint="@color/input_register_hint"
             android:textSize="20dp"
-            android:layout_marginTop="15dp"
+
             android:textCursorDrawable="@drawable/cursor_color"
             android:backgroundTint="@color/input_login_hint"
             />
