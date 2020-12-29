@@ -3,14 +3,10 @@
     pageEncoding="UTF-8"%>
 
 <%
-    request.setCharacterEncoding("utf-8");
-    String user_uSeqno = request.getParameter("user_uSeqno");
-	
-//-----
 	String url_mysql = "jdbc:mysql://localhost/mypeople?serverTimezone=Asia/Seoul&characterEncoding=utf8&useSSL=false";
  	String id_mysql = "root";
  	String pw_mysql = "qwer1234";
-    String WhereDefault = "select * from friendslist where user_uSeqno = " + user_uSeqno  + " order by (case when ascii(substring(fName,1)) between 48 and 57 then 1 WHEN ASCII(SUBSTRING(fName,1)) < 128 THEN 2 ELSE 3 END), fName";
+    String WhereDefault = "select * from friendslist";
     int count = 0;
     
     try {
@@ -31,23 +27,21 @@
             , 
 <%
             }
-%>            
+%>           
 			{
-			"fSeqno" : "<%=rs.getInt(1) %>", 
+			"fSepno" : "<%=rs.getString(1) %>", 
 			"fName" : "<%=rs.getString(2) %>",   
 			"fTel" : "<%=rs.getString(3) %>",  
-            "fRelation" : "<%=rs.getString(4) %>",
-            "fImage" : "<%=rs.getString(5) %>",
-            "fImageReal" : "<%=rs.getString(6) %>",
-            "fTag1" : "<%=rs.getInt(7) %>",
-            "fTag2" : "<%=rs.getInt(8) %>",
-            "fTag3" : "<%=rs.getInt(9) %>",
-            "fTag4" : "<%=rs.getInt(10) %>",
-            "fTag5" : "<%=rs.getInt(11) %>",
-            "fComment" : "<%=rs.getString(12) %>",
-            "fAddress" : "<%=rs.getString(13) %>",
-            "fEmail" : "<%=rs.getString(14) %>"
-
+			"fEmail" : "<%=rs.getString(4) %>"
+			"fAddress" : "<%=rs.getString(5) %>"
+			"fRelation" : "<%=rs.getString(6) %>"
+			"fComment" : "<%=rs.getString(7) %>"
+			"fImage" : "<%=rs.getString(8) %>"
+			"fTag1" : "<%=rs.getString(9) %>"
+			"fTag2" : "<%=rs.getString(10) %>"
+			"fTag3" : "<%=rs.getString(11) %>"
+			"fTag4" : "<%=rs.getString(12) %>"
+			"fTag5" : "<%=rs.getString(13) %>"
 			}
 
 <%		

@@ -364,7 +364,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             Intent intent = null;
             switch (v.getId()){
                 case R.id.main_Btn_AddFriend:
-                    intent = new Intent(MainActivity.this, DetailViewActivity.class);
+                    intent = new Intent(MainActivity.this, AddFriendsActivity.class);
                     intent.putExtra("uSeqno", userSeqno);
                     intent.putExtra("macIP", macIP);
                     startActivity(intent);

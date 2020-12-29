@@ -48,6 +48,10 @@ dependencies {
 
 
 
+    //태현 2020.12.29
+    implementation 'com.squareup.okhttp3:okhttp:4.10.0-RC1'
+
+
     ////태현 2020.12.27
     //recycleview and material library
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
