@@ -30,7 +30,7 @@ public class NetworkTask_youngjae extends AsyncTask<Integer, String, Object> {
     Bean_user bean_user = null;
     String result = null;
 
-
+    int jointelCheck = 0;
     // Constructor
 
 
@@ -83,6 +83,9 @@ public class NetworkTask_youngjae extends AsyncTask<Integer, String, Object> {
                 if(where.equals("useridFind")) {
                    result = parserUserIdFInd(stringBuffer.toString());
                 }
+                if(where.equals("telcheck")){
+                    parser3(stringBuffer.toString());
+                }
 
             }
         }catch (Exception e){
@@ -111,6 +114,9 @@ public class NetworkTask_youngjae extends AsyncTask<Integer, String, Object> {
         }
         if(where.equals("useridFind")){
             return result;
+        }
+        if(where.equals("telcheck")){
+            return jointelCheck;
         }
         return null;
     }
@@ -225,5 +231,40 @@ public class NetworkTask_youngjae extends AsyncTask<Integer, String, Object> {
         return finduserid;
     }
 
+
+    private void parser3(String s){
+        Log.v(TAG,"Parser3()");
+
+
+
+        try {
+            JSONObject jsonObject = new JSONObject(s);
+            JSONArray jsonArray = new JSONArray(jsonObject.getString("user_info"));
+
+
+            for(int i = 0; i < jsonArray.length(); i++){
+                JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
+                int joinTelCheck = jsonObject1.getInt("count");
+
+                switch (joinTelCheck){
+                    case 0:
+                        Log.v(TAG,"중복 x");
+                        break;
+                    default:
+                        Log.v(TAG,"중복 o");
+                        break;
+                }
+
+
+                // 필드변수 loginCheck 에다가 제이슨에서 불러온 loginCount 값을 집어넣음
+                // 필드변수는 보라색
+                jointelCheck = joinTelCheck;
+
+                Log.v(TAG, "----------------------------------");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
 } // ----------------------------------

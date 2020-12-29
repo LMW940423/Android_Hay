@@ -4,13 +4,16 @@ package com.android.mypeople;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class FindIDActivity extends AppCompatActivity {
@@ -23,7 +26,8 @@ public class FindIDActivity extends AppCompatActivity {
     String urlAddrfindid = null;
     String telVaildation ="^\\d{3}-\\d{3,4}-\\d{4}$";
     Bean_user bean = new Bean_user();
-    TextView tv_telcheck;
+    LinearLayout ll_hide;
+    InputMethodManager inputMethodManager;
 
 
     @Override
@@ -44,6 +48,18 @@ public class FindIDActivity extends AppCompatActivity {
         et_tel.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         /////////////////////////////////////////////////////////
 
+
+        //키보드 화면 터치시 숨기기위해 선언.
+        ll_hide = findViewById(R.id.findid_ll_hide);
+        inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);  //OS에서 지원해주는 메소드이다.
+
+        //키보드 화면 터치시 숨김.
+        ll_hide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inputMethodManager.hideSoftInputFromWindow(ll_hide.getWindowToken(),0);
+            }
+        });
 
         btn_continue = findViewById(R.id.findid_btn_continue);
 
@@ -78,8 +94,10 @@ public class FindIDActivity extends AppCompatActivity {
                         new AlertDialog.Builder(FindIDActivity.this)
                                 .setTitle("계정 찾기 결과입니다.")
                                 .setMessage(result)
-                                .setPositiveButton("확인", null)
+                                .setPositiveButton("로그인", mClick)
+                                .setNegativeButton("다시하기", null)
                                 .show();
+
                     }
 
                 }
@@ -112,4 +130,20 @@ public class FindIDActivity extends AppCompatActivity {
         }
         return result;
     }
-}
+
+    /////////////////////////////////////////////////////////
+    // 찾기 결과 다이얼로그 액션                                 //
+    /////////////////////////////////////////////////////////
+    DialogInterface.OnClickListener mClick = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            if(which == DialogInterface.BUTTON_POSITIVE){
+                Intent intent = new Intent(FindIDActivity.this,LoginActivity.class);
+                startActivity(intent);
+            }
+        }
+
+    };
+
+
+} //--------------------------------------
