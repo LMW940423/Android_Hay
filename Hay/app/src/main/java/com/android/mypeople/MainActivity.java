@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private RecyclerView listView = null;
     private RecyclerView.LayoutManager layoutManager = null;
     private ArrayList<Bean_friendslist> data = null;
+    private ArrayList<Bean_tag> tags = null;
     private RecyclerAdapter adapter = null;
 
     String TAG = "MainActivity";
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     Button addBtn = null;
     String macIP;
     String urlAddr = null;
+    String urlAddr2 = null;
     CoordinatorLayout outLayout = null;
     int spinnerItmeNum = -1;
     String putExtraSpNum = null;
@@ -86,7 +88,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         // 값 받기
         Intent intent = getIntent();
         userSeqno = intent.getIntExtra("uSeqno", 0);
-
         Log.v(TAG, "userSeqno : " + userSeqno);
 
         // 스피너
@@ -98,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         // 연결 (검색 내용, 정렬순에 따라 jsp 바꿔주기)
         macIP = intent.getStringExtra("macIP");
-
+        urlAddr2 = "http://" + macIP + ":8080/mypeople/tag_select_Tagname.jsp?user_uSeqno=" + userSeqno;
         // 인텐트 받은 액션여부로 나누어 urlAddr 설정하기
         action = intent.getStringExtra("action");
 
@@ -296,6 +297,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             getSearchText = searchText.getText().toString();
             Log.v(TAG, "connectGetData getSearchText : " + getSearchText);
             ListNetworkTask listNetworkTask= new ListNetworkTask(MainActivity.this, urlAddr, where);
+
+
+                SelectTagNameTask selectTagNameTask = new SelectTagNameTask(MainActivity.this, urlAddr2, "select");
+                Object obj1 = selectTagNameTask.execute().get();
+                tags = (ArrayList<Bean_tag>) obj1;
+                tagName[1] = tags.get(0).getTag1();
+                tagName[2] = tags.get(0).getTag2();
+                tagName[3] = tags.get(0).getTag3();
+                tagName[4] = tags.get(0).getTag4();
+                tagName[5] = tags.get(0).getTag5();
+
+
             ///////////////////////////////////////////////////////////////////////////////////////
             Object obj = listNetworkTask.execute().get();
             data = (ArrayList<Bean_friendslist>) obj;
