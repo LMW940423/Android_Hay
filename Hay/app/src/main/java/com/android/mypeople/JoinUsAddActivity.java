@@ -31,14 +31,15 @@ public class JoinUsAddActivity extends AppCompatActivity {
     String registId,macIP,test,test2,test3;
     String uPw, uName, uTel,uPwCheck;
     EditText et_pw,et_pwcheck,et_tel,et_name;
-    TextView tv_id,tv_pwcheck,tv_pw;
+    TextView tv_id,tv_pwcheck,tv_pw,tv_telcheck;
     Button btn_continue;
     InputMethodManager inputMethodManager ;
     LinearLayout ll_hide;
     String pwVaildation = "^.*(?=^.{8,20}$)(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$";
     String telVaildation = "^\\d{3}-\\d{3,4}-\\d{4}$";
     String nameVaildation = "^[a-zA-Zㄱ-ㅎ가-힣]+$";
-
+    int count = 0;
+    String urlAddrjoinTelCheck = null;
 
 
 
@@ -64,7 +65,7 @@ public class JoinUsAddActivity extends AppCompatActivity {
 
         tv_pwcheck = findViewById(R.id.joinadd_tv_pwcheck);
         tv_pw = findViewById(R.id.joinadd_tv_pw);
-
+        tv_telcheck = findViewById(R.id.joinadd_tv_telcheck);
         // 연결
         et_pw = findViewById(R.id.joinadd_et_pw);
 
@@ -187,6 +188,45 @@ public class JoinUsAddActivity extends AppCompatActivity {
                 inputMethodManager.hideSoftInputFromWindow(ll_hide.getWindowToken(),0);
             }
         });
+        ////////////////////////////////////////////////////////////////////////
+        // 전화번호 중복화인                                                      //
+        //                                                                    //
+        //                                                                    //
+        ////////////////////////////////////////////////////////////////////////
+        et_tel.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                tv_telcheck.setText("");
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                tv_telcheck.setText("");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String inputTel = et_tel.getText().toString();
+                Log.v(TAG,"inputTel : " + inputTel);
+
+                urlAddrjoinTelCheck = "http://"+macIP+":8080/mypeople/joinTelCheck.jsp?usertel="+inputTel;
+                count = telduplicationCheck();
+                if(count == 0 && inputTel.length()==13) {
+                    String strColor = "#077C0C";
+                    tv_telcheck.setTextColor(Color.parseColor(strColor));
+                    tv_telcheck.setText("사용 가능 합니다");
+                }else if(inputTel.length()<13){
+                    tv_telcheck.setText("");
+                }else{
+                    String strColor = "#D34646";
+                    tv_telcheck.setTextColor(Color.parseColor(strColor));
+                    tv_telcheck.setText("중복된 전화번호 입니다.");
+                }
+
+            }
+        });
+
+
     }
 
 
@@ -225,7 +265,7 @@ public class JoinUsAddActivity extends AppCompatActivity {
                         .setPositiveButton("확인", null)
                         .show();
 
-            }else if(!test2.matches(telVaildation) || test2.equals("")) {
+            }else if(!test2.matches(telVaildation) || test2.equals("") || test2.length()<13) {
                 new AlertDialog.Builder(JoinUsAddActivity.this)
                         .setTitle("전화번호를 확인하세요")
                         .setPositiveButton("확인", null)
@@ -236,7 +276,11 @@ public class JoinUsAddActivity extends AppCompatActivity {
                         .setPositiveButton("확인", null)
                         .show();
 
-
+            }else if(tv_telcheck.getText().toString().equals("중복된 전화번호 입니다.")){
+                new AlertDialog.Builder(JoinUsAddActivity.this)
+                        .setTitle("중복된 전화번호는 사용하실 수 없습니다.")
+                        .setPositiveButton("확인", null)
+                        .show();
             } else {
             urlAddr = urlAddr + "id=" + registId + "&pw=" + uPw + "&name=" + uName + "&tel=" + uTel;
             Log.v(TAG, "registId = " + registId);
@@ -275,4 +319,20 @@ public class JoinUsAddActivity extends AppCompatActivity {
 
     }
 
+
+    private int telduplicationCheck() {
+        try {
+            NetworkTask_youngjae networkTask2 = new NetworkTask_youngjae(JoinUsAddActivity.this, urlAddrjoinTelCheck, "telcheck");
+            Object obj = networkTask2.execute().get();
+
+            count = (int) obj;
+            Log.v("여기", "loginCount : " + count);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return count;
+    }
 }
