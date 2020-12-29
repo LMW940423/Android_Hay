@@ -12,7 +12,7 @@ import android.view.animation.Animation;
 public class IntroActivity extends Activity {
 
     /** Duration of wait **/
-    private final int SPLASH_DISPLAY_LENGTH = 1000;
+    private final int SPLASH_DISPLAY_LENGTH = 3000;
 
     /** Called when the activity is first created. */
     @Override
@@ -26,7 +26,7 @@ public class IntroActivity extends Activity {
             @Override
             public void run() {
                 /* Create an Intent that will start the Menu-Activity. */
-                Intent mainIntent = new Intent(IntroActivity.this,LoginActivity.class);
+                Intent mainIntent = new Intent(IntroActivity.this,ViewPagerActivity.class);
                 IntroActivity.this.startActivity(mainIntent);
                 IntroActivity.this.finish();
             }
