@@ -31,6 +31,7 @@ public class FindPWActivity extends AppCompatActivity {
         setContentView(R.layout.activity_find_pw);
 
         Intent intent = new Intent();
+        intent = getIntent();
         macIP = intent.getStringExtra("macIP");
 
 
