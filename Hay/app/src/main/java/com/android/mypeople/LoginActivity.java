@@ -140,7 +140,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
                     }else{
-                        Toast.makeText(LoginActivity.this, "회원정보를 확인해주세요", Toast.LENGTH_SHORT).show();
                         new AlertDialog.Builder(LoginActivity.this)
                                 .setTitle("입력 정보 오류")
                                 .setMessage("입력정보를 확인하세요")
