@@ -61,6 +61,9 @@ public class TAGActivity extends AppCompatActivity {
 
                     break;
                 case R.id.tag__cancel_cancelBtn:
+                    Intent intent = new Intent(TAGActivity.this,MainActivity.class);
+                    startActivity(intent);
+                    break;
 
 
             }
