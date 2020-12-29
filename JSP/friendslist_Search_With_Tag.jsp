@@ -48,7 +48,8 @@
             "fTag4" : "<%=rs.getInt(10) %>",
             "fTag5" : "<%=rs.getInt(11) %>",
             "fComment" : "<%=rs.getString(12) %>",
-            "fAddress" : "<%=rs.getString(13) %>"
+            "fAddress" : "<%=rs.getString(13) %>",
+            "fEmail" : "<%=rs.getString(14) %>"
 
 			}
 
