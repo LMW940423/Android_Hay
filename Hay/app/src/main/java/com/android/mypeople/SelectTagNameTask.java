@@ -15,16 +15,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class ListNetworkTask extends AsyncTask<Integer, String, Object> {
+public class SelectTagNameTask extends AsyncTask<Integer, String, Object> {
 
-    /*공용이므로 항상 수정사항 알려주시기 바랍니다.*/
-
-    final static String TAG = "NetworkTask";
+    final static String TAG = "SelectTagNameTask";
     Context context = null;
     String mAddr = null;
     ProgressDialog progressDialog = null;
-    ArrayList<Bean_friendslist> friends;
-
+    ArrayList<Bean_tag> tagnames;
     ///////////////////////////////////////////////////////////////////////////////////////
     // Date : 2020.12.25
     //
@@ -34,16 +31,11 @@ public class ListNetworkTask extends AsyncTask<Integer, String, Object> {
     ///////////////////////////////////////////////////////////////////////////////////////
     String where = null;
 
-    // 검색 내용
-    int tagNum = -1;
-    String searchText = null;
-    String whereAdd = null;
-
-    public ListNetworkTask(Context context, String mAddr, String where) {
+    public SelectTagNameTask(Context context, String mAddr, String where) {
         this.context = context;
         this.mAddr = mAddr;
+        this.tagnames = new ArrayList<Bean_tag>();
         this.where = where;
-        this.friends = new ArrayList<Bean_friendslist>();
         Log.v(TAG, "Start : " + mAddr);
     }
 
@@ -55,6 +47,7 @@ public class ListNetworkTask extends AsyncTask<Integer, String, Object> {
         progressDialog.setTitle("Dialogue");
         progressDialog.setMessage("Get ....");
         progressDialog.show();
+
     }
 
     @Override
@@ -74,10 +67,12 @@ public class ListNetworkTask extends AsyncTask<Integer, String, Object> {
         ///////////////////////////////////////////////////////////////////////////////////////
         String result = null;
         ///////////////////////////////////////////////////////////////////////////////////////
+
         try {
             URL url = new URL(mAddr);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setConnectTimeout(10000);
+
             if(httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK){
                 inputStream = httpURLConnection.getInputStream();
                 inputStreamReader = new InputStreamReader(inputStream);
@@ -97,24 +92,15 @@ public class ListNetworkTask extends AsyncTask<Integer, String, Object> {
                 //
                 ///////////////////////////////////////////////////////////////////////////////////////
                 if(where.equals("select")){
-                    parserSelect(stringBuffer.toString()); // 전체 친구 리스트 가져오기
-                    Log.v(TAG, "where : " + "select");
-                }else if(where.equals("search_with_tag")) {
-                    parserSearch_With_Tag(stringBuffer.toString());
-                    Log.v(TAG, "where : " + "search_with_tag");
-                }else if(where.equals("search")) {
-                    parserSearch(stringBuffer.toString());
-                    Log.v(TAG, "where : " + "search");
+                    parserSelect(stringBuffer.toString());
                 }else{
                     result = parserAction(stringBuffer.toString());
-                    Log.v(TAG, "where : else");
                 }
                 ///////////////////////////////////////////////////////////////////////////////////////
 
             }
         }catch (Exception e){
             e.printStackTrace();
-            Log.v(TAG, "연결 실패");
         }finally {
             try {
                 if(bufferedReader != null) bufferedReader.close();
@@ -134,11 +120,7 @@ public class ListNetworkTask extends AsyncTask<Integer, String, Object> {
         //
         ///////////////////////////////////////////////////////////////////////////////////////
         if(where.equals("select")){
-            return friends;
-        }else if(where.equals("search")) {
-            return friends;
-        }else if(where.equals("search_with_tag")) {
-            return friends;
+            return tagnames;
         }else{
             return result;
         }
@@ -151,6 +133,7 @@ public class ListNetworkTask extends AsyncTask<Integer, String, Object> {
         Log.v(TAG, "onPostExecute()");
         super.onPostExecute(o);
         progressDialog.dismiss();
+
     }
 
     @Override
@@ -158,6 +141,7 @@ public class ListNetworkTask extends AsyncTask<Integer, String, Object> {
         Log.v(TAG,"onCancelled()");
         super.onCancelled();
     }
+
     ///////////////////////////////////////////////////////////////////////////////////////
     // Date : 2020.12.25
     //
@@ -166,115 +150,31 @@ public class ListNetworkTask extends AsyncTask<Integer, String, Object> {
     //
     ///////////////////////////////////////////////////////////////////////////////////////
     private void parserSelect(String s){
-        Log.v(TAG,"parserSelect()");
+        Log.v(TAG,"Parser()");
+
         try {
             JSONObject jsonObject = new JSONObject(s);
             JSONArray jsonArray = new JSONArray(jsonObject.getString("friendslist"));
-            friends.clear();
+            tagnames.clear();
 
             for(int i = 0; i < jsonArray.length(); i++){
                 JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
-                int fSeqno = jsonObject1.getInt("fSeqno");
-                String fName = jsonObject1.getString("fName");
-                String fTel = jsonObject1.getString("fTel");
-                String fRelation = jsonObject1.getString("fRelation");
-                String fImage = jsonObject1.getString("fImage");
-                String fImageReal = jsonObject1.getString("fImageReal");
-                int fTag1 = jsonObject1.getInt("fTag1");
-                int fTag2 = jsonObject1.getInt("fTag2");
-                int fTag3 = jsonObject1.getInt("fTag3");
-                int fTag4 = jsonObject1.getInt("fTag4");
-                int fTag5 = jsonObject1.getInt("fTag5");
-                String fComment = jsonObject1.getString("fComment");
-                String fAddress = jsonObject1.getString("fAddress");
+                String tagName1 = jsonObject1.getString("tag1");
+                String tagName2 = jsonObject1.getString("tag2");
+                String tagName3 = jsonObject1.getString("tag3");
+                String tagName4 = jsonObject1.getString("tag4");
+                String tagName5 = jsonObject1.getString("tag5");
+                int user_uSeqno = jsonObject1.getInt("user_uSeqno");
 
+                Log.v(TAG, "tagName1 : " + tagName1);
+                Log.v(TAG, "tagName2 : " + tagName2);
+                Log.v(TAG, "tagName3 : " + tagName3);
+                Log.v(TAG, "tagName4 : " + tagName4);
+                Log.v(TAG, "tagName5 : " + tagName5);
 
-                Log.v(TAG, "fSeqno : " + fSeqno);
-                Log.v(TAG, "fName : " + fName);
-                Log.v(TAG, "fTel : " + fTel);
-                Log.v(TAG, "fRelation : " + fRelation);
-
-                Bean_friendslist friend = new Bean_friendslist(fSeqno, fName, fTel, fAddress, fRelation, fComment, fImage, fImageReal, fTag1, fTag2, fTag3, fTag4, fTag5);
-                friends.add(friend);
-                // Log.v(TAG, member.toString());
-                Log.v(TAG, "----------------------------------");
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    private void parserSearch(String s){
-        Log.v(TAG,"parserSearch()");
-        try {
-            JSONObject jsonObject = new JSONObject(s);
-            JSONArray jsonArray = new JSONArray(jsonObject.getString("friendslist"));
-            friends.clear();
-
-            for(int i = 0; i < jsonArray.length(); i++){
-                JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
-                int fSeqno = jsonObject1.getInt("fSeqno");
-                String fName = jsonObject1.getString("fName");
-                String fTel = jsonObject1.getString("fTel");
-                String fRelation = jsonObject1.getString("fRelation");
-                String fImage = jsonObject1.getString("fImage");
-                String fImageReal = jsonObject1.getString("fImageReal");
-                int fTag1 = jsonObject1.getInt("fTag1");
-                int fTag2 = jsonObject1.getInt("fTag2");
-                int fTag3 = jsonObject1.getInt("fTag3");
-                int fTag4 = jsonObject1.getInt("fTag4");
-                int fTag5 = jsonObject1.getInt("fTag5");
-                String fComment = jsonObject1.getString("fComment");
-                String fAddress = jsonObject1.getString("fAddress");
-
-
-                Log.v(TAG, "fSeqno : " + fSeqno);
-                Log.v(TAG, "fName : " + fName);
-                Log.v(TAG, "fTel : " + fTel);
-                Log.v(TAG, "fRelation : " + fRelation);
-
-                Bean_friendslist friend = new Bean_friendslist(fSeqno, fName, fTel, fAddress, fRelation, fComment, fImage, fImageReal, fTag1, fTag2, fTag3, fTag4, fTag5);
-                friends.add(friend);
-                // Log.v(TAG, member.toString());
-                Log.v(TAG, "----------------------------------");
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    private void parserSearch_With_Tag(String s){
-        Log.v(TAG,"parserSearch()");
-        try {
-            JSONObject jsonObject = new JSONObject(s);
-            JSONArray jsonArray = new JSONArray(jsonObject.getString("friendslist"));
-            friends.clear();
-
-            for(int i = 0; i < jsonArray.length(); i++){
-                JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
-                int fSeqno = jsonObject1.getInt("fSeqno");
-                String fName = jsonObject1.getString("fName");
-                String fTel = jsonObject1.getString("fTel");
-                String fRelation = jsonObject1.getString("fRelation");
-                String fImage = jsonObject1.getString("fImage");
-                String fImageReal = jsonObject1.getString("fImageReal");
-                int fTag1 = jsonObject1.getInt("fTag1");
-                int fTag2 = jsonObject1.getInt("fTag2");
-                int fTag3 = jsonObject1.getInt("fTag3");
-                int fTag4 = jsonObject1.getInt("fTag4");
-                int fTag5 = jsonObject1.getInt("fTag5");
-                String fComment = jsonObject1.getString("fComment");
-                String fAddress = jsonObject1.getString("fAddress");
-
-
-                Log.v(TAG, "fSeqno : " + fSeqno);
-                Log.v(TAG, "fName : " + fName);
-                Log.v(TAG, "fTel : " + fTel);
-                Log.v(TAG, "fRelation : " + fRelation);
-
-                Bean_friendslist friend = new Bean_friendslist(fSeqno, fName, fTel, fAddress, fRelation, fComment, fImage, fImageReal, fTag1, fTag2, fTag3, fTag4, fTag5);
-                friends.add(friend);
-                // Log.v(TAG, member.toString());
+                Bean_tag tagname = new Bean_tag(tagName1, tagName2, tagName3, tagName4, tagName5, user_uSeqno);
+                tagnames.add(tagname);
+                 Log.v(TAG, tagname.toString());
                 Log.v(TAG, "----------------------------------");
             }
         }catch (Exception e){
@@ -291,7 +191,7 @@ public class ListNetworkTask extends AsyncTask<Integer, String, Object> {
     //
     ///////////////////////////////////////////////////////////////////////////////////////
     private String parserAction(String s){
-        Log.v(TAG,"parserAction()");
+        Log.v(TAG,"Parser()");
         String returnValue = null;
 
         try {
@@ -308,4 +208,5 @@ public class ListNetworkTask extends AsyncTask<Integer, String, Object> {
     }
     ///////////////////////////////////////////////////////////////////////////////////////
 
-}
+
+} // ------

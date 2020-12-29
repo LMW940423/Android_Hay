@@ -45,13 +45,13 @@ public class ThirdFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_third,container,false);
 
         TextView tv03 = view.findViewById(R.id.tv_03);
-        tv03.setText("\n여기엔뭐하지\n아이디어좀줘라");
+        tv03.setText("\n지금 바로\n시작해볼까요?");
 
         TextView tv03_01 = view.findViewById(R.id.tv_03_01);
-        tv03_01.setText("주소록 등록시 사진 업로드로 리스트에서\n친구를 사진으로 구별 할 수 있습니다.");
+        tv03_01.setText("아래의 시작하기 버튼을 눌러\nHay를 시작해주세요.");
 
         ImageView iv_03 = view.findViewById(R.id.iv_03);
-        iv_03.setImageResource(R.drawable.intro_02);
+        iv_03.setImageResource(R.drawable.intro_03);
 
 
         return view;

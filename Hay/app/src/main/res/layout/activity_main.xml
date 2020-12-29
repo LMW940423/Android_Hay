@@ -2,8 +2,8 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:id="@+id/main_coordinator_outer"
     tools:context=".MainActivity">
 
@@ -21,7 +21,7 @@
             >
         </include>
         <LinearLayout
-            android:layout_width="300dp"
+            android:layout_width="350dp"
             android:layout_height="80sp"
             android:layout_gravity="center"
             android:orientation="horizontal"
@@ -30,18 +30,16 @@
             >
             <Spinner
                 android:id="@+id/main_Spinner_tag"
-                android:layout_width="0px"
-                android:layout_height="30sp"
+                android:layout_width="90sp"
+                android:layout_height="50sp"
                 android:spinnerMode="dropdown"
-                android:layout_weight="3"
                 android:gravity="center"
 
                 />
             <EditText
                 android:id="@+id/main_Edit_SearchText"
-                android:layout_width="0px"
+                android:layout_width="200sp"
                 android:layout_height="50sp"
-                android:layout_weight="5"
                 android:hint="검색어를 입력하세요"
                 android:gravity="center"
                 android:inputType="text"
@@ -52,25 +50,24 @@
                 />
             <ImageView
                 android:id="@+id/main_ImgBtn_SearchBtn"
-                android:layout_width="0px"
+                android:layout_width="50sp"
                 android:layout_height="wrap_content"
                 android:src="@drawable/search_big"
-                android:layout_weight="1"
                 />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="300dp"
+            android:layout_width="350dp"
             android:layout_height="30sp"
             android:layout_gravity="center"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <RadioGroup
                 android:id="@+id/main_RadioGroup"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_gravity="center"
                 android:gravity="center"
@@ -81,25 +78,44 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:checked="true"
-                    android:text="가나다순"/>
+                    android:text="이름순"/>
                 <RadioButton
                     android:id="@+id/main_Radio_New"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+
                     android:text="최신순"/>
                 <RadioButton
                     android:id="@+id/main_Radio_Tag"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+
                     android:text="태그순"/>
             </RadioGroup>
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="13sp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_gravity="center"
+            >
+            <TextView
+                android:id="@+id/main_Text_Count"
+                android:layout_width="350dp"
+                android:layout_height="match_parent"
+                android:text="검색결과"
+                android:textSize="10sp"
+                android:gravity="right"
+                />
+
+        </LinearLayout>
 
         <LinearLayout
-            android:layout_width="300dp"
+            android:layout_width="350dp"
             android:layout_height="80sp"
             android:orientation="vertical"
             android:layout_gravity="center"
@@ -108,7 +124,7 @@
                 android:id="@+id/main_Btn_AddFriend"
                 android:layout_width="match_parent"
                 android:layout_height="50sp"
-                android:text="+친구추가(n명)"
+                android:text="+친구추가"
                 android:textSize="20dp"
                 android:backgroundTint="#b190ee"
                 />
@@ -134,7 +150,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listView_Friends"
-            android:layout_width="300dp"
+            android:layout_width="350dp"
             android:layout_gravity="center"
             android:layout_height="wrap_content"
             android:layout_weight="9"

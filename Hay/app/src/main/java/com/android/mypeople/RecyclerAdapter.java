@@ -19,15 +19,15 @@ import java.util.Locale;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder>{
     //------------------Click Event------------------
-//    public interface OnItemClickListener{
-//        void onItemClick(View v, int position);
-//    }
-//
-//    private OnItemClickListener mListener = null;
-//
-//    public void setOnItemClickListener(OnItemClickListener listener){
-//        this.mListener = listener;
-//    }
+    public interface OnItemClickListener{
+        void onItemClick(View v, int position);
+    }
+
+    private OnItemClickListener mListener = null;
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.mListener = listener;
+    }
     //------------------Click Event------------------
 
     private ArrayList<Bean_friendslist> mDataset = null;
@@ -59,19 +59,19 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
 
             //--------------------Click Event--------------------
-//            v.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//
-//                    int position=getAdapterPosition();//어뎁터 포지션값
-//                    // 뷰홀더에서 사라지면 NO_POSITION 을 리턴
-//                    if(position!=RecyclerView.NO_POSITION){
-//                        if(mListener !=null){
-//                            mListener.onItemClick(view,position);
-//                        }
-//                    }
-//                }
-//            });
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    int position=getAdapterPosition();//어뎁터 포지션값
+                    // 뷰홀더에서 사라지면 NO_POSITION 을 리턴
+                    if(position!=RecyclerView.NO_POSITION){
+                        if(mListener !=null){
+                            mListener.onItemClick(view,position);
+                        }
+                    }
+                }
+            });
             //---------------------Click Event---------------------
 
         }
@@ -104,10 +104,102 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         // mDataset.get(position).getUsername()
 
         // if로 tag가 한개일때 두개일때 세개일때 나눠서?
-        holder.tag_1.setImageResource(mDataset.get(position).getChooseTag1());
-        holder.tag_2.setImageResource(mDataset.get(position).getChooseTag2());
-        holder.tag_3.setImageResource(mDataset.get(position).getChooseTag3());
+//        holder.tag_1.setImageResource(mDataset.get(position).getChooseTag1());
+//        holder.tag_2.setImageResource(mDataset.get(position).getChooseTag2());
+//        holder.tag_3.setImageResource(mDataset.get(position).getChooseTag3());
+//        holder.photo.setImageResource(mDataset.get(position).getPhoto());
+
+        int tagTot = 0;
+        int choose1 = mDataset.get(position).getfTag1();
+        int choose2 = mDataset.get(position).getfTag2();
+        int choose3 = mDataset.get(position).getfTag3();
+        int choose4 = mDataset.get(position).getfTag4();
+        int choose5 = mDataset.get(position).getfTag5();
+        ArrayList<Integer> temp = new ArrayList<Integer>();
+
+        if(choose1 == 1){
+            temp.add(1);
+        }
+        if(choose2 == 1){
+            temp.add(2);
+        }
+        if(choose3 == 1){
+            temp.add(3);
+        }
+        if(choose4 == 1){
+            temp.add(4);
+        }
+        if(choose5 == 1){
+            temp.add(5);
+        }
+
+        tagTot = temp.size();
+        Log.v("Recycler : ", String.valueOf(tagTot));
+
+        switch (tagTot){ // 태그 개수에 따른 분류
+            case 1:
+                if(temp.get(0) == 1){
+                    holder.tag_1.setImageResource(R.drawable.main_spinner_tag1);
+                }
+                if(temp.get(0) == 2){
+                    holder.tag_1.setImageResource(R.drawable.main_spinner_tag2);
+                }
+                if(temp.get(0) == 3){
+                    holder.tag_1.setImageResource(R.drawable.main_spinner_tag3);
+                }
+                if(temp.get(0) == 4){
+                    holder.tag_1.setImageResource(R.drawable.main_spinner_tag4);
+                }
+                if(temp.get(0) == 5){
+                    holder.tag_1.setImageResource(R.drawable.main_spinner_tag5);
+                }
+//                for(int i = 1; i <= 5; i++){
+//                    if(temp.get(0) == i){
+//                        holder.tag_1.setImageResource(R.drawable.main_spinner_tag5);
+//                    }
+//                }
+                break;
+            case 2:
+                if(temp.get(0) == 1){
+                    holder.tag_1.setImageResource(R.drawable.main_spinner_tag1);
+                }
+                if(temp.get(0) == 2){
+                    holder.tag_1.setImageResource(R.drawable.main_spinner_tag2);
+                }
+                if(temp.get(0) == 3){
+                    holder.tag_1.setImageResource(R.drawable.main_spinner_tag3);
+                }
+                if(temp.get(0) == 4){
+                    holder.tag_1.setImageResource(R.drawable.main_spinner_tag4);
+                }
+                if(temp.get(0) == 5){
+                    holder.tag_1.setImageResource(R.drawable.main_spinner_tag5);
+                }
+                break;
+
+        }
+
+
+
+        //test
+//        if(mDataset.get(position).getfTag1() == 1){
+//            holder.tag_1.setImageResource(R.drawable.fifthlight);
+//        }
+//        if(mDataset.get(position).getfTag1() == 0 && mDataset.get(position).getfTag2() == 1){
+//            holder.tag_1.setImageResource(R.drawable.fifthlight);
+//        }
+//        if(mDataset.get(position).getfTag3() == 1){
+//            holder.tag_1.setImageResource(R.drawable.fifthlight);
+//        }
+//        if(mDataset.get(position).getfTag4() == 1){
+//            holder.tag_1.setImageResource(R.drawable.fifthlight);
+//        }
+//        if(mDataset.get(position).getfTag5() == 1){
+//            holder.tag_1.setImageResource(R.drawable.fifthlight);
+//        }
+
         holder.photo.setImageResource(mDataset.get(position).getPhoto());
+
         holder.name.setText(mDataset.get(position).getfName());
         holder.relation.setText(mDataset.get(position).getfRelation());
         holder.comment.setText(mDataset.get(position).getfComment());

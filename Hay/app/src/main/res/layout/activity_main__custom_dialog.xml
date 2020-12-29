@@ -2,16 +2,16 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="320dp"
+    android:layout_width="match_parent"
     android:orientation="vertical"
     android:background="#fff"
     android:id="@+id/detail_ll_hide"
-    android:layout_height="350dp">
+    android:layout_height="320sp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/mpd_title"
+        android:id="@+id/main_Dialog_Tv_Name"
         android:background="#b190ee"
         android:padding="20dp"
         android:textSize="20dp"
@@ -35,7 +35,20 @@
         android:layout_width="match_parent"
         android:layout_height="1sp"
         android:background="@color/black"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/main_Dialog_Tv_Msg"
+        android:textSize="20dp"
+        android:layout_margin="10dp"
+        android:textColor="@color/black"
+        android:text="문자 보내기">
 
+    </TextView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:background="@color/black"/>
     <TextView
         android:layout_margin="10dp"
         android:layout_width="match_parent"
@@ -69,7 +82,7 @@
 
 
         <Button
-            android:id="@+id/mpd_cancelbtn"
+            android:id="@+id/main_Dialog_Btn_Cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="취소"
