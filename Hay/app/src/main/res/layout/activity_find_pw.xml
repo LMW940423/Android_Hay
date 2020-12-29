@@ -54,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="이메일 주소를 입력해주세요."
-            android:inputType="textPassword"
+            android:inputType="textEmailAddress"
             android:padding="10dp"
             android:textColor="@color/input_register"
             android:textColorHint="@color/input_register_hint"
