@@ -20,6 +20,7 @@ import java.util.Locale;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder>{
+    String TAG = "RecyclerAdapter";
     //------------------Click Event------------------
     public interface OnItemClickListener{
         void onItemClick(View v, int position);
@@ -99,6 +100,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     // 표시하는 메소드
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+        Log.v(TAG, "구간 1 -----------------");
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         //데이터를 받은걸 올리기

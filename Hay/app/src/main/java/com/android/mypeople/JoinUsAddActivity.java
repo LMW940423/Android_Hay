@@ -112,6 +112,8 @@ public class JoinUsAddActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 test = et_pw.getText().toString().trim();
                 if(test.matches(pwVaildation) && test.length() > 0 ){
+                    String strColor = "#077C0C";
+                    tv_pw.setTextColor(Color.parseColor(strColor));
                     tv_pw.setText("사용 가능합니다.");
                 } else{
                     tv_pw.setText("");

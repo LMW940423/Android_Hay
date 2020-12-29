@@ -12,7 +12,15 @@ public class Bean_tag {
     String tag5;
     int user_uSeqno;
 
+
+
     //Constructor
+
+    public  Bean_tag(){
+
+
+    }
+
     public Bean_tag(String tag1, String tag2, String tag3, String tag4, String tag5, int user_uSeqno) {
         this.tag1 = tag1;
         this.tag2 = tag2;
@@ -21,6 +29,12 @@ public class Bean_tag {
         this.tag5 = tag5;
         this.user_uSeqno = user_uSeqno;
     }
+
+
+
+
+
+
 
     //Getters and Setters
     public String getTag1() {
