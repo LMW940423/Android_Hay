@@ -39,13 +39,11 @@ public class ListNetworkTask extends AsyncTask<Integer, String, Object> {
     String searchText = null;
     String whereAdd = null;
 
-    public ListNetworkTask(Context context, String mAddr, String where, int tagNum, String searchText) {
+    public ListNetworkTask(Context context, String mAddr, String where) {
         this.context = context;
         this.mAddr = mAddr;
         this.where = where;
         this.friends = new ArrayList<Bean_friendslist>();
-        this.searchText = searchText;
-        this.tagNum = tagNum;
         Log.v(TAG, "Start : " + mAddr);
     }
 

@@ -23,7 +23,7 @@
             android:maxWidth="50dp"
             android:maxHeight="50dp"
             android:layout_weight="1"
-            android:src="@drawable/main_spinner_tag1"
+
             />
 
         <ImageView
@@ -34,7 +34,7 @@
             android:background="@color/white"
             android:maxWidth="50dp"
             android:maxHeight="50dp"
-            android:src="@drawable/main_spinner_tag2"
+
             />
 
         <ImageView
@@ -45,7 +45,7 @@
             android:maxWidth="50dp"
             android:maxHeight="50dp"
             android:layout_weight="1"
-            android:src="@drawable/main_spinner_tag3"
+
             />
     </LinearLayout>
     <LinearLayout

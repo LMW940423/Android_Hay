@@ -28,7 +28,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
 
@@ -63,13 +63,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     String action = null;
     String putExtraText = null;
     int dataSize = 0;
+    TextView tv_Count = null;
 
     RadioButton radioBtn_Name = null;
     RadioButton radioBtn_New = null;
     RadioButton radioBtn_Tag = null;
     RadioGroup radioGroup = null;
-
-
 
     // 스피너 (태그 선택 안했을 경우 이미지 필요)
     int tag[] = {R.drawable.plus, R.drawable.main_spinner_tag1, R.drawable.main_spinner_tag2, R.drawable.main_spinner_tag3, R.drawable.main_spinner_tag4, R.drawable.main_spinner_tag5};
@@ -82,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_main);
 
         searchText = findViewById(R.id.main_Edit_SearchText);
+        tv_Count = findViewById(R.id.main_Text_Count);
 
         // 값 받기
         Intent intent = getIntent();
@@ -95,7 +95,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         MainSpinnerAdapter spinnerAdapter = new MainSpinnerAdapter(getApplicationContext(), tag, tagName);
         spinner.setAdapter(spinnerAdapter);
         spinnerItmeNum = spinner.getSelectedItemPosition();
-
 
         // 연결 (검색 내용, 정렬순에 따라 jsp 바꿔주기)
         macIP = intent.getStringExtra("macIP");
@@ -238,6 +237,48 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onResume();
         Log.v(TAG, "onResume urlAddr : " + urlAddr);
         connectGetData();
+
+        // 리스트 클릭 이벤트
+
+        adapter.setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                Intent intent = new Intent(MainActivity.this, Main_CustomDialog.class);
+                // 뭐가 필요하실지 몰라서 다 보냅니다..
+                intent.putExtra("macIP", macIP);
+
+                intent.putExtra("fSeqno", data.get(position).getfSeqno());
+                intent.putExtra("fName", data.get(position).getfName());
+                intent.putExtra("fRelation", data.get(position).getfRelation());
+                intent.putExtra("fTel", data.get(position).getfTel());
+                intent.putExtra("fImage", data.get(position).getfImage());
+                intent.putExtra("fImageReal", data.get(position).getfImageReal());
+                intent.putExtra("fTag1", data.get(position).getfTag1());
+                intent.putExtra("fTag2", data.get(position).getfTag2());
+                intent.putExtra("fTag3", data.get(position).getfTag3());
+                intent.putExtra("fTag4", data.get(position).getfTag4());
+                intent.putExtra("fTag5", data.get(position).getfTag5());
+                intent.putExtra("fComment", data.get(position).getfComment());
+                intent.putExtra("fAddress", data.get(position).getfAddress());
+
+                Log.v(TAG,"macIP : " + macIP);
+                Log.v(TAG, "클릭한 사람 seqno : " + data.get(position).getfSeqno());
+                Log.v(TAG, "이름 : " + data.get(position).getfName());
+                Log.v(TAG, "관계 : " + data.get(position).getfRelation());
+                Log.v(TAG, "이미지 : " + data.get(position).getfImage());
+                Log.v(TAG, "실제이미지 : " + data.get(position).getfImageReal());
+                Log.v(TAG, "tag1 : " + data.get(position).getfTag1());
+                Log.v(TAG, "tag2 : " + data.get(position).getfTag2());
+                Log.v(TAG, "tag3 : " + data.get(position).getfTag3());
+                Log.v(TAG, "tag4 : " + data.get(position).getfTag4());
+                Log.v(TAG, "tag5 : " + data.get(position).getfTag5());
+                Log.v(TAG, "코멘트 : " + data.get(position).getfComment());
+                Log.v(TAG, "주소 : " + data.get(position).getfAddress());
+
+                startActivity(intent);
+            }
+        });
+
         Log.v(TAG, "onResume()");
         Log.v(TAG, "onResume getPosition : " + spinnerItmeNum);
 
@@ -245,7 +286,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private void connectGetData(){
         try {
-            Log.v(TAG, "connectGetData 1----------");
             ///////////////////////////////////////////////////////////////////////////////////////
             // Date : 2020.12.25
             //
@@ -253,27 +293,33 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             //  - NetworkTask의 생성자 추가 : where <- "select"
             //
             ///////////////////////////////////////////////////////////////////////////////////////
-            Log.v(TAG, "connectGetData 2----------");
             getSearchText = searchText.getText().toString();
             Log.v(TAG, "connectGetData getSearchText : " + getSearchText);
-            ListNetworkTask listNetworkTask= new ListNetworkTask(MainActivity.this, urlAddr, where, spinnerItmeNum, getSearchText);
+            ListNetworkTask listNetworkTask= new ListNetworkTask(MainActivity.this, urlAddr, where);
             ///////////////////////////////////////////////////////////////////////////////////////
-            Log.v(TAG, "connectGetData 3----------");
             Object obj = listNetworkTask.execute().get();
-            Log.v(TAG, "connectGetData 4----------");
             data = (ArrayList<Bean_friendslist>) obj;
-            Log.v(TAG, "connectGetData 5----------");
+
             Log.v(TAG, "data.size() : " + data.size());
-            dataSize = data.size();
-            Log.v(TAG, "connectGetData 6----------");
+
             adapter = new RecyclerAdapter(MainActivity.this, R.layout.main_recycler_items, data);
-            Log.v(TAG, "connectGetData 7----------");
             listView.setAdapter(adapter);
+
             // 리스트 개수 파악
-            Log.v(TAG, "dataSize = " + dataSize);
-            addBtn = findViewById(R.id.main_Btn_AddFriend);
-            addBtn.setText("+친구추가(" + dataSize + "명)");
-//                listView.setOnItemClickListener(onItemClickListener);
+            Intent intent = getIntent();
+            String get = intent.getStringExtra("searchText");
+            if(action.equals("Show_List")){ // 전체 개수 보존하기 위함
+                dataSize = data.size();
+                Log.v(TAG, "dataSize = " + dataSize);
+                tv_Count.setText("친구 : " + dataSize + "명");
+
+            }else { // 그외의 액션 시 검색결과로 보여줌
+                dataSize = data.size();
+                Log.v(TAG, "dataSize = " + dataSize);
+                tv_Count.setText("검색결과 : " + dataSize + "명");
+            }
+
+
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -401,7 +447,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             Log.v(TAG, "버튼 클릭 : " + checkedId);
 
             switch (checkedId){
-                case 2131230985: // 가나다순 (ASC)
+                case 2131231000: // 가나다순 (ASC)
                     Comparator<Bean_friendslist> solt_Name = new Comparator<Bean_friendslist>() {
                         @Override
                         public int compare(Bean_friendslist o1, Bean_friendslist o2) {
@@ -409,10 +455,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         }
                     };
                     Collections.sort(data, solt_Name);
+
                     adapter.notifyDataSetChanged();
                     break;
 
-                case 2131230986: // 최신순 (DESC)
+                case 2131231001: // 최신순 (DESC)
                     Comparator<Bean_friendslist> solt_new = new Comparator<Bean_friendslist>() {
                         @Override
                         public int compare(Bean_friendslist o1, Bean_friendslist o2) {
@@ -423,7 +470,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     adapter.notifyDataSetChanged() ;
                     break;
 
-                case 2131230987: // 태그순 (ASC)
+                case 2131231002: // 태그순 (ASC)
                     Comparator<Bean_friendslist> solt_Tag = new Comparator<Bean_friendslist>() {
                         @Override
                         public int compare(Bean_friendslist o1, Bean_friendslist o2) {
