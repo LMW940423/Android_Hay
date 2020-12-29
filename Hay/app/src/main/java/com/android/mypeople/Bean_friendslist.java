@@ -22,15 +22,14 @@ public class Bean_friendslist {
     int fTag3;
     int fTag4;
     int fTag5;
-    int chooseTag1;
-    int chooseTag2;
-    int chooseTag3;
     int photo;
+    String fEmail;
 
     //Constructor
-    public Bean_friendslist(int fSeqno, int user_uSeqno, String fName, String fTel, String fAddress, String fRelation, String fComment, String fImage, String fImageReal, int fTag1, int fTag2, int fTag3, int fTag4, int fTag5) {
+
+
+    public Bean_friendslist(int fSeqno, String fName, String fTel, String fAddress, String fRelation, String fComment, String fImage, String fImageReal, int fTag1, int fTag2, int fTag3, int fTag4, int fTag5, String fEmail) {
         this.fSeqno = fSeqno;
-        this.user_uSeqno = user_uSeqno;
         this.fName = fName;
         this.fTel = fTel;
         this.fAddress = fAddress;
@@ -43,45 +42,20 @@ public class Bean_friendslist {
         this.fTag3 = fTag3;
         this.fTag4 = fTag4;
         this.fTag5 = fTag5;
+        this.fEmail = fEmail;
     }
 
-    public Bean_friendslist(String fName, String fRelation, String fComment, int chooseTag1, int chooseTag2, int chooseTag3, int photo) {
+    public Bean_friendslist(String fName, String fRelation, String fComment, int photo) {
         this.fName = fName;
         this.fRelation = fRelation;
         this.fComment = fComment;
-        this.chooseTag1 = chooseTag1;
-        this.chooseTag2 = chooseTag2;
-        this.chooseTag3 = chooseTag3;
         this.photo = photo;
     }
 
-    public Bean_friendslist(String fName, String fRelation, String fComment, int chooseTag1, int photo) {
-        this.fName = fName;
-        this.fRelation = fRelation;
-        this.fComment = fComment;
-        this.chooseTag1 = chooseTag1;
-        this.photo = photo;
-    }
 
     public Bean_friendslist() {
     }
 
-    public Bean_friendslist(int fSeqno, String fName, String fTel, String fAddress, String fRelation, String fComment, String fImage, String fImageReal, int fTag1, int fTag2, int fTag3, int fTag4, int fTag5) {
-        this.fSeqno = fSeqno;
-        this.user_uSeqno = user_uSeqno;
-        this.fName = fName;
-        this.fTel = fTel;
-        this.fAddress = fAddress;
-        this.fRelation = fRelation;
-        this.fComment = fComment;
-        this.fImage = fImage;
-        this.fImageReal = fImageReal;
-        this.fTag1 = fTag1;
-        this.fTag2 = fTag2;
-        this.fTag3 = fTag3;
-        this.fTag4 = fTag4;
-        this.fTag5 = fTag5;
-    }
 
     //Getters and Setters
     public int getfSeqno() {
@@ -196,35 +170,19 @@ public class Bean_friendslist {
         this.fTag5 = fTag5;
     }
 
-    public int getChooseTag1() {
-        return chooseTag1;
-    }
-
-    public void setChooseTag1(int chooseTag1) {
-        this.chooseTag1 = chooseTag1;
-    }
-
-    public int getChooseTag2() {
-        return chooseTag2;
-    }
-
-    public void setChooseTag2(int chooseTag2) {
-        this.chooseTag2 = chooseTag2;
-    }
-
-    public int getChooseTag3() {
-        return chooseTag3;
-    }
-
-    public void setChooseTag3(int chooseTag3) {
-        this.chooseTag3 = chooseTag3;
-    }
-
     public int getPhoto() {
         return photo;
     }
 
     public void setPhoto(int photo) {
         this.photo = photo;
+    }
+
+    public String getfEmail() {
+        return fEmail;
+    }
+
+    public void setfEmail(String fEmail) {
+        this.fEmail = fEmail;
     }
 }

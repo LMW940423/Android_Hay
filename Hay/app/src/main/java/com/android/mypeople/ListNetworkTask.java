@@ -187,6 +187,7 @@ public class ListNetworkTask extends AsyncTask<Integer, String, Object> {
                 int fTag5 = jsonObject1.getInt("fTag5");
                 String fComment = jsonObject1.getString("fComment");
                 String fAddress = jsonObject1.getString("fAddress");
+                String fEmail = jsonObject1.getString("fEmail");
 
 
                 Log.v(TAG, "fSeqno : " + fSeqno);
@@ -194,7 +195,7 @@ public class ListNetworkTask extends AsyncTask<Integer, String, Object> {
                 Log.v(TAG, "fTel : " + fTel);
                 Log.v(TAG, "fRelation : " + fRelation);
 
-                Bean_friendslist friend = new Bean_friendslist(fSeqno, fName, fTel, fAddress, fRelation, fComment, fImage, fImageReal, fTag1, fTag2, fTag3, fTag4, fTag5);
+                Bean_friendslist friend = new Bean_friendslist(fSeqno, fName, fTel, fAddress, fRelation, fComment, fImage, fImageReal, fTag1, fTag2, fTag3, fTag4, fTag5, fEmail);
                 friends.add(friend);
                 // Log.v(TAG, member.toString());
                 Log.v(TAG, "----------------------------------");
@@ -226,14 +227,14 @@ public class ListNetworkTask extends AsyncTask<Integer, String, Object> {
                 int fTag5 = jsonObject1.getInt("fTag5");
                 String fComment = jsonObject1.getString("fComment");
                 String fAddress = jsonObject1.getString("fAddress");
-
+                String fEmail = jsonObject1.getString("fEmail");
 
                 Log.v(TAG, "fSeqno : " + fSeqno);
                 Log.v(TAG, "fName : " + fName);
                 Log.v(TAG, "fTel : " + fTel);
                 Log.v(TAG, "fRelation : " + fRelation);
 
-                Bean_friendslist friend = new Bean_friendslist(fSeqno, fName, fTel, fAddress, fRelation, fComment, fImage, fImageReal, fTag1, fTag2, fTag3, fTag4, fTag5);
+                Bean_friendslist friend = new Bean_friendslist(fSeqno, fName, fTel, fAddress, fRelation, fComment, fImage, fImageReal, fTag1, fTag2, fTag3, fTag4, fTag5, fEmail);
                 friends.add(friend);
                 // Log.v(TAG, member.toString());
                 Log.v(TAG, "----------------------------------");
@@ -244,7 +245,7 @@ public class ListNetworkTask extends AsyncTask<Integer, String, Object> {
     }
 
     private void parserSearch_With_Tag(String s){
-        Log.v(TAG,"parserSearch()");
+        Log.v(TAG,"parserSearch_With_Tag()");
         try {
             JSONObject jsonObject = new JSONObject(s);
             JSONArray jsonArray = new JSONArray(jsonObject.getString("friendslist"));
@@ -265,6 +266,7 @@ public class ListNetworkTask extends AsyncTask<Integer, String, Object> {
                 int fTag5 = jsonObject1.getInt("fTag5");
                 String fComment = jsonObject1.getString("fComment");
                 String fAddress = jsonObject1.getString("fAddress");
+                String fEmail = jsonObject1.getString("fEmail");
 
 
                 Log.v(TAG, "fSeqno : " + fSeqno);
@@ -272,7 +274,7 @@ public class ListNetworkTask extends AsyncTask<Integer, String, Object> {
                 Log.v(TAG, "fTel : " + fTel);
                 Log.v(TAG, "fRelation : " + fRelation);
 
-                Bean_friendslist friend = new Bean_friendslist(fSeqno, fName, fTel, fAddress, fRelation, fComment, fImage, fImageReal, fTag1, fTag2, fTag3, fTag4, fTag5);
+                Bean_friendslist friend = new Bean_friendslist(fSeqno, fName, fTel, fAddress, fRelation, fComment, fImage, fImageReal, fTag1, fTag2, fTag3, fTag4, fTag5, fEmail);
                 friends.add(friend);
                 // Log.v(TAG, member.toString());
                 Log.v(TAG, "----------------------------------");

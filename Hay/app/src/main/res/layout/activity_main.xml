@@ -76,29 +76,29 @@
                     android:id="@+id/main_Radio_Name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="110"
                     android:checked="true"
-                    android:text="이름순"/>
+                    android:text="이름순 정렬"/>
                 <RadioButton
                     android:id="@+id/main_Radio_New"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="100"
 
-                    android:text="최신순"/>
+                    android:text="최신등록순 정렬"/>
                 <RadioButton
                     android:id="@+id/main_Radio_Tag"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
 
-                    android:text="태그순"/>
+                    android:text="태그별 정렬"/>
             </RadioGroup>
 
         </LinearLayout>
         <LinearLayout
             android:layout_width="350dp"
-            android:layout_height="13sp"
+            android:layout_height="15sp"
             android:orientation="vertical"
             android:gravity="center"
             android:layout_gravity="center"
@@ -108,7 +108,7 @@
                 android:layout_width="350dp"
                 android:layout_height="match_parent"
                 android:text="검색결과"
-                android:textSize="10sp"
+                android:textSize="12sp"
                 android:gravity="right"
                 />
 
@@ -116,21 +116,22 @@
 
         <LinearLayout
             android:layout_width="350dp"
-            android:layout_height="80sp"
+            android:layout_height="63sp"
             android:orientation="vertical"
             android:layout_gravity="center"
             >
             <Button
                 android:id="@+id/main_Btn_AddFriend"
                 android:layout_width="match_parent"
-                android:layout_height="50sp"
+                android:layout_height="40sp"
                 android:text="+친구추가"
-                android:textSize="20dp"
+                android:textSize="15sp"
+                android:textStyle="bold"
                 android:backgroundTint="#b190ee"
                 />
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30sp"
+                android:layout_height="20sp"
 
                 android:orientation="horizontal"
                 android:background="#b190ee"
@@ -138,8 +139,11 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="TAG            사진              이름            관계"
+                    android:paddingTop="2sp"
+                    android:text="    TAG             사진                      이름                              관계"
+                    android:textSize="12sp"
+                    android:textColor="@color/white"
+
                     />
 
             </LinearLayout>

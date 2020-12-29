@@ -43,6 +43,7 @@ public class Main_CustomDialog extends AppCompatActivity{
     Button btn_Cancel = null;
 
     int fSeqno = -1;
+    int uSeqno = -1;
     String fName = null;
     String fTel = null;
     String fRelation = null;
@@ -55,6 +56,7 @@ public class Main_CustomDialog extends AppCompatActivity{
     int fTag5 = -1;
     String fComment = null;
     String fAddress = null;
+    String fEmail = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,7 @@ public class Main_CustomDialog extends AppCompatActivity{
 
         Intent intent = getIntent();
         macIP = intent.getStringExtra("macIP");
+        uSeqno = intent.getIntExtra("uSeqno", 0);
         fSeqno = intent.getIntExtra("fSeqno", 0);
         fName = intent.getStringExtra("fName");
         fTel = intent.getStringExtra("fTel");
@@ -76,6 +79,7 @@ public class Main_CustomDialog extends AppCompatActivity{
         fTag5 = intent.getIntExtra("fTag5", 0);
         fComment = intent.getStringExtra("fComment");
         fAddress = intent.getStringExtra("fAddress");
+        fEmail = intent.getStringExtra("fEmail");
 
         tv_Name = findViewById(R.id.main_Dialog_Tv_Name);
         tv_Call = findViewById(R.id.main_Dialog_Tv_Call);
@@ -111,6 +115,25 @@ public class Main_CustomDialog extends AppCompatActivity{
                     break;
                 case R.id.main_Dialog_Tv_Detail: // 상세보기
                     intent = new Intent(Main_CustomDialog.this, DetailViewActivity.class);
+
+                    // 뭐가 필요하실지 몰라서 다 보냅니다..
+                    intent.putExtra("macIP", macIP);
+                    intent.putExtra("uSeqno", uSeqno);
+                    intent.putExtra("fSeqno", fSeqno);
+                    intent.putExtra("fName", fName);
+                    intent.putExtra("fRelation", fRelation);
+                    intent.putExtra("fTel", fTel);
+                    intent.putExtra("fImage", fImage);
+                    intent.putExtra("fImageReal", fImageReal);
+                    intent.putExtra("fTag1", fTag1);
+                    intent.putExtra("fTag2", fTag2);
+                    intent.putExtra("fTag3", fTag3);
+                    intent.putExtra("fTag4", fTag4);
+                    intent.putExtra("fTag5", fTag5);
+                    intent.putExtra("fComment", fComment);
+                    intent.putExtra("fAddress", fAddress);
+                    intent.putExtra("fEmail", fEmail);
+
                     startActivity(intent);
                     break;
                 case R.id.main_Dialog_Tv_Delete: // 연락처 삭제

@@ -10,10 +10,10 @@
     android:background="@android:color/white">
 
     <LinearLayout
-        android:layout_width="80sp"
+        android:layout_width="30sp"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="left">
+        android:gravity="center">
 
         <ImageView
             android:id="@+id/main_ImgV_tag1"
@@ -34,7 +34,6 @@
             android:background="@color/white"
             android:maxWidth="50dp"
             android:maxHeight="50dp"
-
             />
 
         <ImageView
@@ -49,29 +48,35 @@
             />
     </LinearLayout>
     <LinearLayout
-        android:layout_width="49sp"
+        android:layout_width="18sp"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        />
+    <LinearLayout
+        android:layout_width="55sp"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
         >
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/main_ImgV_Photo"
             android:gravity="center_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:text="사진"
             android:layout_weight="1"
-            android:src="@drawable/search_big"
+            android:src="@drawable/testimg"
             />
     </LinearLayout>
     <LinearLayout
-        android:layout_width="31sp"
+        android:layout_width="45sp"
         android:layout_height="match_parent"
         />
 
 
     <LinearLayout
-        android:layout_width="210sp"
+        android:layout_width="250sp"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_gravity="center_horizontal"
@@ -84,7 +89,7 @@
             android:orientation="horizontal"
             >
             <LinearLayout
-                android:layout_width="73sp"
+                android:layout_width="95sp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_horizontal"
@@ -96,6 +101,7 @@
                     android:layout_height="wrap_content"
                     android:text="이민우"
                     android:gravity="left"
+                    android:textColor="@color/black"
                     />
             </LinearLayout>
             <LinearLayout
@@ -109,12 +115,13 @@
                     android:layout_height="wrap_content"
                     android:gravity="left"
                     android:text="본인"
+                    android:textColor="@color/black"
                     />
 
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
-            android:layout_width="200sp"
+            android:layout_width="265sp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
 

@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     RadioGroup radioGroup = null;
 
     // 스피너 (태그 선택 안했을 경우 이미지 필요)
-    int tag[] = {R.drawable.plus, R.drawable.main_spinner_tag1, R.drawable.main_spinner_tag2, R.drawable.main_spinner_tag3, R.drawable.main_spinner_tag4, R.drawable.main_spinner_tag5};
+    int tag[] = {R.drawable.tagspinner, R.drawable.main_spinner_tag1, R.drawable.main_spinner_tag2, R.drawable.main_spinner_tag3, R.drawable.main_spinner_tag4, R.drawable.main_spinner_tag5};
     String tagName[] = {"TAG", "TAG1", "TAG2", "TAG3", "TAG4", "TAG5"};
     Spinner spinner = null;
 
@@ -247,7 +247,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 Intent intent = new Intent(MainActivity.this, Main_CustomDialog.class);
                 // 뭐가 필요하실지 몰라서 다 보냅니다..
                 intent.putExtra("macIP", macIP);
-
+                intent.putExtra("uSeqno", userSeqno);
                 intent.putExtra("fSeqno", data.get(position).getfSeqno());
                 intent.putExtra("fName", data.get(position).getfName());
                 intent.putExtra("fRelation", data.get(position).getfRelation());
@@ -261,6 +261,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 intent.putExtra("fTag5", data.get(position).getfTag5());
                 intent.putExtra("fComment", data.get(position).getfComment());
                 intent.putExtra("fAddress", data.get(position).getfAddress());
+                intent.putExtra("fEmail", data.get(position).getfEmail());
 
                 Log.v(TAG,"macIP : " + macIP);
                 Log.v(TAG, "클릭한 사람 seqno : " + data.get(position).getfSeqno());

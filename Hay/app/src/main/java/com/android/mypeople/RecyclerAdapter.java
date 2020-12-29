@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder>{
     //------------------Click Event------------------
     public interface OnItemClickListener{
@@ -40,7 +42,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         public ImageView tag_1;
         public ImageView tag_2;
         public ImageView tag_3;
-        public ImageView photo;
+        public CircleImageView photo;
         public TextView name;
         public TextView relation;
         public TextView comment;
@@ -100,14 +102,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         //데이터를 받은걸 올리기
-        // Integer.toString(mDataset.get(position).getSno())
-        // mDataset.get(position).getUsername()
-
-        // if로 tag가 한개일때 두개일때 세개일때 나눠서?
-//        holder.tag_1.setImageResource(mDataset.get(position).getChooseTag1());
-//        holder.tag_2.setImageResource(mDataset.get(position).getChooseTag2());
-//        holder.tag_3.setImageResource(mDataset.get(position).getChooseTag3());
-//        holder.photo.setImageResource(mDataset.get(position).getPhoto());
 
         int tagTot = 0;
         int choose1 = mDataset.get(position).getfTag1();
@@ -134,9 +128,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         }
 
         tagTot = temp.size();
-        Log.v("Recycler : ", String.valueOf(tagTot));
-
+        Log.v("Recycler", "초기 temp size : " + String.valueOf(tagTot));
+        int switchNum = 0;
         switch (tagTot){ // 태그 개수에 따른 분류
+
+            // 저장된 태그가 1개일 때-------------------------------------------------
             case 1:
                 if(temp.get(0) == 1){
                     holder.tag_1.setImageResource(R.drawable.main_spinner_tag1);
@@ -153,59 +149,215 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
                 if(temp.get(0) == 5){
                     holder.tag_1.setImageResource(R.drawable.main_spinner_tag5);
                 }
-//                for(int i = 1; i <= 5; i++){
-//                    if(temp.get(0) == i){
-//                        holder.tag_1.setImageResource(R.drawable.main_spinner_tag5);
-//                    }
-//                }
+
                 break;
+
+            // 저장된 태그가 2개일 때-------------------------------------------------
             case 2:
+                Log.v("Recycler", "태그 2개일 때 >> 이름 : " + mDataset.get(position).getfName() + " Temp size : " + temp.size() + " Temp 최초값 : " + temp);
                 if(temp.get(0) == 1){
                     holder.tag_1.setImageResource(R.drawable.main_spinner_tag1);
+                    switchNum = 1;
+                    temp.remove(0);
+                    Log.v("Recycler", "Temp1 : " + temp);
+                }else if(switchNum == 0){
+                    if(temp.get(0) == 2){
+                        holder.tag_1.setImageResource(R.drawable.main_spinner_tag2);
+                        switchNum = 1;
+                        temp.remove(0);
+                        Log.v("Recycler", "Temp2 : " + temp);
+                    }else{
+                        if(temp.get(0) == 3){
+                            Log.v("Recycler", "Temp3 before : " + temp);
+                            holder.tag_1.setImageResource(R.drawable.main_spinner_tag3);
+                            switchNum = 1;
+                            temp.remove(0);
+                            Log.v("Recycler", "Temp3 after : " + temp);
+                        }else{
+                            if(temp.get(0) == 4){
+                                holder.tag_1.setImageResource(R.drawable.main_spinner_tag4);
+                                switchNum = 1;
+                                temp.remove(0);
+                                Log.v("Recycler", "Temp4 : " + temp);
+                            }else{
+                                if(temp.get(0) == 5){
+                                    holder.tag_1.setImageResource(R.drawable.main_spinner_tag5);
+                                    switchNum = 1;
+                                    temp.remove(0);
+                                    Log.v("Recycler", "Temp5 : " + temp);
+                                }
+                            }
+                        }
+                    }
                 }
-                if(temp.get(0) == 2){
-                    holder.tag_1.setImageResource(R.drawable.main_spinner_tag2);
-                }
-                if(temp.get(0) == 3){
-                    holder.tag_1.setImageResource(R.drawable.main_spinner_tag3);
-                }
-                if(temp.get(0) == 4){
-                    holder.tag_1.setImageResource(R.drawable.main_spinner_tag4);
-                }
-                if(temp.get(0) == 5){
-                    holder.tag_1.setImageResource(R.drawable.main_spinner_tag5);
+                switchNum = 0;
+                if(temp.get(0) == 1){
+                    Log.v("Recycler", "2번째 Temp1 before : " + temp);
+                    holder.tag_2.setImageResource(R.drawable.main_spinner_tag1);
+                    switchNum = 1;
+                    temp.remove(0);
+                    Log.v("Recycler", "2번째 Temp1 after : " + temp);
+                }else if(switchNum == 0){
+                    if(temp.get(0) == 2){
+                        Log.v("Recycler", "2번째 Temp2 before : " + temp);
+                        holder.tag_2.setImageResource(R.drawable.main_spinner_tag2);
+                        switchNum = 1;
+                        temp.remove(0);
+                        Log.v("Recycler", "2번째 Temp2 after : " + temp);
+                    }else{
+                        if(temp.get(0) == 3){
+                            Log.v("Recycler", "2번째 Temp3 before : " + temp);
+                            holder.tag_2.setImageResource(R.drawable.main_spinner_tag3);
+                            switchNum = 1;
+                            temp.remove(0);
+                            Log.v("Recycler", "2번째 Temp3 after : " + temp);
+                        }else{
+                            if(temp.get(0) == 4){
+                                Log.v("Recycler", "2번째 Temp4 before : " + temp);
+                                holder.tag_2.setImageResource(R.drawable.main_spinner_tag4);
+                                switchNum = 1;
+                                temp.remove(0);
+                                Log.v("Recycler", "2번째 Temp4 after : " + temp);
+                            }else{
+                                if(temp.get(0) == 5){
+                                    Log.v("Recycler", "2번째 Temp5 before : " + temp);
+                                    holder.tag_2.setImageResource(R.drawable.main_spinner_tag5);
+                                    switchNum = 1;
+                                    temp.remove(0);
+                                    Log.v("Recycler", "2번째 Temp5 after : " + temp);
+                                }
+                            }
+                        }
+                    }
                 }
                 break;
 
+            // 저장된 태그가 3개일 때-------------------------------------------------
+            case 3:
+                Log.v("Recycler", "태그 3개일 때 !! > 이름 : " + mDataset.get(position).getfName() + " Temp size : " + temp.size() + " Temp 최초값 : " + temp);
+                if(temp.get(0) == 1){
+                    holder.tag_1.setImageResource(R.drawable.main_spinner_tag1);
+                    switchNum = 1;
+                    temp.remove(0);
+                    Log.v("Recycler", "Temp1 : " + temp);
+                }else if(switchNum == 0){
+                    if(temp.get(0) == 2){
+                        holder.tag_1.setImageResource(R.drawable.main_spinner_tag2);
+                        switchNum = 1;
+                        temp.remove(0);
+                        Log.v("Recycler", "Temp2 : " + temp);
+                    }else{
+                        if(temp.get(0) == 3){
+                            Log.v("Recycler", "Temp3 before : " + temp);
+                            holder.tag_1.setImageResource(R.drawable.main_spinner_tag3);
+                            switchNum = 1;
+                            temp.remove(0);
+                            Log.v("Recycler", "Temp3 after : " + temp);
+                        }else{
+                            if(temp.get(0) == 4){
+                                holder.tag_1.setImageResource(R.drawable.main_spinner_tag4);
+                                switchNum = 1;
+                                temp.remove(0);
+                                Log.v("Recycler", "Temp4 : " + temp);
+                            }else{
+                                if(temp.get(0) == 5){
+                                    holder.tag_1.setImageResource(R.drawable.main_spinner_tag5);
+                                    switchNum = 1;
+                                    temp.remove(0);
+                                    Log.v("Recycler", "Temp5 : " + temp);
+                                }
+                            }
+                        }
+                    }
+                }
+                switchNum = 0;
+                if(temp.get(0) == 1){
+                    Log.v("Recycler", "2번째 Temp1 before : " + temp);
+                    holder.tag_2.setImageResource(R.drawable.main_spinner_tag1);
+                    switchNum = 1;
+                    temp.remove(0);
+                    Log.v("Recycler", "2번째 Temp1 after : " + temp);
+                }else if(switchNum == 0){
+                    if(temp.get(0) == 2){
+                        Log.v("Recycler", "2번째 Temp2 before : " + temp);
+                        holder.tag_2.setImageResource(R.drawable.main_spinner_tag2);
+                        switchNum = 1;
+                        temp.remove(0);
+                        Log.v("Recycler", "2번째 Temp2 after : " + temp);
+                    }else{
+                        if(temp.get(0) == 3){
+                            Log.v("Recycler", "2번째 Temp3 before : " + temp);
+                            holder.tag_2.setImageResource(R.drawable.main_spinner_tag3);
+                            switchNum = 1;
+                            temp.remove(0);
+                            Log.v("Recycler", "2번째 Temp3 after : " + temp);
+                        }else{
+                            if(temp.get(0) == 4){
+                                Log.v("Recycler", "2번째 Temp4 before : " + temp);
+                                holder.tag_2.setImageResource(R.drawable.main_spinner_tag4);
+                                switchNum = 1;
+                                temp.remove(0);
+                                Log.v("Recycler", "2번째 Temp4 after : " + temp);
+                            }else{
+                                if(temp.get(0) == 5){
+                                    Log.v("Recycler", "2번째 Temp5 before : " + temp);
+                                    holder.tag_2.setImageResource(R.drawable.main_spinner_tag5);
+                                    switchNum = 1;
+                                    temp.remove(0);
+                                    Log.v("Recycler", "2번째 Temp5 after : " + temp);
+                                }
+                            }
+                        }
+                    }
+                }
+                switchNum = 0;
+                if(temp.get(0) == 1){
+                    Log.v("Recycler", "3번째 Temp1 before : " + temp);
+                    holder.tag_3.setImageResource(R.drawable.main_spinner_tag1);
+                    switchNum = 1;
+                    temp.remove(0);
+                    Log.v("Recycler", "3번째 Temp1 after : " + temp);
+                }else if(switchNum == 0){
+                    if(temp.get(0) == 2){
+                        Log.v("Recycler", "3번째 Temp2 before : " + temp);
+                        holder.tag_3.setImageResource(R.drawable.main_spinner_tag2);
+                        switchNum = 1;
+                        temp.remove(0);
+                        Log.v("Recycler", "3번째 Temp2 after : " + temp);
+                    }else{
+                        if(temp.get(0) == 3){
+                            Log.v("Recycler", "3번째 Temp3 before : " + temp);
+                            holder.tag_3.setImageResource(R.drawable.main_spinner_tag3);
+                            switchNum = 1;
+                            temp.remove(0);
+                            Log.v("Recycler", "3번째 Temp3 after : " + temp);
+                        }else{
+                            if(temp.get(0) == 4){
+                                Log.v("Recycler", "3번째 Temp4 before : " + temp);
+                                holder.tag_3.setImageResource(R.drawable.main_spinner_tag4);
+                                switchNum = 1;
+                                temp.remove(0);
+                                Log.v("Recycler", "3번째 Temp4 after : " + temp);
+                            }else{
+                                if(temp.get(0) == 5){
+                                    Log.v("Recycler", "3번째 Temp5 before : " + temp);
+                                    holder.tag_3.setImageResource(R.drawable.main_spinner_tag5);
+                                    switchNum = 1;
+                                    temp.remove(0);
+                                    Log.v("Recycler", "3번째 Temp5 after : " + temp);
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
         }
+        Log.v("Recycler", "Temp end: " + temp);
 
-
-
-        //test
-//        if(mDataset.get(position).getfTag1() == 1){
-//            holder.tag_1.setImageResource(R.drawable.fifthlight);
-//        }
-//        if(mDataset.get(position).getfTag1() == 0 && mDataset.get(position).getfTag2() == 1){
-//            holder.tag_1.setImageResource(R.drawable.fifthlight);
-//        }
-//        if(mDataset.get(position).getfTag3() == 1){
-//            holder.tag_1.setImageResource(R.drawable.fifthlight);
-//        }
-//        if(mDataset.get(position).getfTag4() == 1){
-//            holder.tag_1.setImageResource(R.drawable.fifthlight);
-//        }
-//        if(mDataset.get(position).getfTag5() == 1){
-//            holder.tag_1.setImageResource(R.drawable.fifthlight);
-//        }
-
-        holder.photo.setImageResource(mDataset.get(position).getPhoto());
-
+        holder.photo.setImageResource(R.drawable.testimg);
         holder.name.setText(mDataset.get(position).getfName());
         holder.relation.setText(mDataset.get(position).getfRelation());
         holder.comment.setText(mDataset.get(position).getfComment());
-
-
-
 
     }
 
