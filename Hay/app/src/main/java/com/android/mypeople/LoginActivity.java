@@ -201,9 +201,9 @@ public class LoginActivity extends AppCompatActivity {
                 // 비번 찾기로 이동 //
                 case R.id.login_tv_findpw :
                     intent = new Intent(LoginActivity.this, FindPWActivity.class);
+                    intent.putExtra("macIP", tempIP);
                     startActivity(intent);
                     break;
-
 
 
 
