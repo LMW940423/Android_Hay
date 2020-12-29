@@ -160,7 +160,6 @@
         android:layout_height="0px"
         android:textSize="20dp"
         android:gravity="center"
-        android:text="192.168.2.3"
         android:text="192.168.2.7"
         android:hint="Apache Server IP Address"
         android:visibility="invisible"
