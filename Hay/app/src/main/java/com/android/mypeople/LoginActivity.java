@@ -1,12 +1,15 @@
 package com.android.mypeople;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -45,6 +48,8 @@ public class LoginActivity extends AppCompatActivity {
     String setTel;
     Timestamp setDeleteDate;
     Timestamp setInsertDate;
+    String loginid,loginpw;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,11 +74,46 @@ public class LoginActivity extends AppCompatActivity {
         tv_findpw = findViewById(R.id.login_tv_findpw);
 
         cb_autologin = findViewById(R.id.login_cb_AutoLogin);
-
+        cb_autologin.setOnCheckedChangeListener(mSetCheckChangeListener);
         btn_login.setOnClickListener(onClickListener);
         tv_join.setOnClickListener(onClickListener);
         tv_findid.setOnClickListener(onClickListener);
         tv_findpw.setOnClickListener(onClickListener);
+
+
+        ////////////////////////////////////////////////////////////////////////
+        //자동로그인 / 자동로그인이 되어있을때                                         //
+        //                                                                    //
+        //                                                                    //
+        ////////////////////////////////////////////////////////////////////////
+        SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+
+        loginid = auto.getString("inputId",null);
+        loginpw = auto.getString("inputPw",null);
+        Log.v(TAG,"login : " + loginid);
+        Log.v(TAG,"loginpw : " + loginpw);
+        if(loginid !=null && loginpw != null) {
+            urlAddrLogin = "http://" + macIP + ":8080/mypeople/loginCheck.jsp?userid="+loginid+"&userpw="+loginpw;
+            urlAddrLoginCheck = "http://"+ macIP +":8080/mypeople/loginCheck_count.jsp?userid="+loginid+"&userpw="+loginpw;
+            connectGetData();
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.putExtra("uSeqno", setSeqno);
+            Log.v(TAG, "uSeqno : " + setSeqno);
+            intent.putExtra("uId", setId);
+            intent.putExtra("uPw", setPw);
+            intent.putExtra("uName", setName);
+            intent.putExtra("uTel", setTel);
+            intent.putExtra("uDeleteDate", setDeleteDate);
+            intent.putExtra("uInsertDate", setInsertDate);
+            intent.putExtra("action", "Show_List");
+            String tempIP = edtIP.getText().toString();
+            intent.putExtra("macIP", tempIP);  // IP주소를 보내줌.
+            Log.v(TAG, "여기기랑 :  " + setSeqno + setId + setPw + setName + setTel + setDeleteDate + setInsertDate);
+            startActivity(intent);
+            finish();
+        }
+            /////////////////////////////////////////////////////////////////////////////////
+
 
         //키보드 화면 터치시 숨기기위해 선언.
         ll_hide = findViewById(R.id.login_ll_hide);
@@ -104,25 +144,19 @@ public class LoginActivity extends AppCompatActivity {
             String tempIP = edtIP.getText().toString();
             uId = et_id.getText().toString();
             uPw= et_pw.getText().toString();
+            urlAddrLogin = "http://" + macIP + ":8080/mypeople/loginCheck.jsp?userid="+uId+"&userpw="+uPw;
+            urlAddrLoginCheck = "http://"+ macIP +":8080/mypeople/loginCheck_count.jsp?userid="+uId+"&userpw="+uPw;
             switch (v.getId()){
 
                 // 로그인 버튼 //
                 case R.id.login_btn_login :
 
-                    urlAddrLogin = "http://" + macIP + ":8080/mypeople/loginCheck.jsp?userid="+uId+"&userpw="+uPw;
-                    urlAddrLoginCheck = "http://"+ macIP +":8080/mypeople/loginCheck_count.jsp?userid="+uId+"&userpw="+uPw;
-
                     Log.v(TAG, "uId : " + uId);
                     Log.v(TAG, "uPw : " + uPw);
-
-
-
                     count = loginCount();
                     if (count == 1) {
                         connectGetData(); // 유저정보 받아옴
                         Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-
-
                         // 값을 Intent로 보내줌
                         intent.putExtra("uSeqno", setSeqno);
                         Log.v(TAG, "uSeqno : " + setSeqno);
@@ -137,9 +171,13 @@ public class LoginActivity extends AppCompatActivity {
                         Log.v(TAG, "여기기랑 :  " + setSeqno + setId +setPw+setName+setTel+setDeleteDate+setInsertDate);
                         startActivity(intent);
 
-
-
                     }else{
+                        // 로그인 실패
+                        SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+                        SharedPreferences.Editor autoLogin = auto.edit();
+                        autoLogin.clear();
+                        autoLogin.commit();
+
                         new AlertDialog.Builder(LoginActivity.this)
                                 .setTitle("입력 정보 오류")
                                 .setMessage("입력정보를 확인하세요")
@@ -238,6 +276,38 @@ public class LoginActivity extends AppCompatActivity {
         }
         return count;
     }
+
+
+    ////////////////////////////////////////////////////////////////////////
+    // 자동 로그인                                                          //
+    //                                                                    //
+    //                                                                    //
+    ////////////////////////////////////////////////////////////////////////
+    CheckBox.OnCheckedChangeListener mSetCheckChangeListener =  new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if (isChecked) {
+                SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+                SharedPreferences.Editor autoLogin = auto.edit();
+                autoLogin.putString("inputId", et_id.getText().toString());
+                autoLogin.putString("inputPw", et_pw.getText().toString());
+                autoLogin.commit();
+                Log.v(TAG, "login2 : " + loginid);
+                Log.v(TAG, "loginpw2 : " + loginpw);
+            } else {
+                SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+                SharedPreferences.Editor autoLogin = auto.edit();
+                autoLogin.clear();
+                autoLogin.commit();
+                Log.v(TAG, "login3 : " + loginid);
+                Log.v(TAG, "loginpw3 : " + loginpw);
+            }
+        }
+    };
+    ///////////////////////////////////////////////////////////////////////
+
+
+
 
 
 
