@@ -47,7 +47,11 @@
             android:textColor="@color/input_register"
             android:layout_marginLeft="10dp"
             />
-
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
         <EditText
             android:id="@+id/join_et_id"
             android:layout_width="match_parent"
@@ -60,10 +64,24 @@
             android:textSize="20dp"
             android:textCursorDrawable="@drawable/cursor_color"
             android:backgroundTint="@color/input_login_hint"
-
-
+            android:layout_marginTop="10dp"
             />
 
+
+            <Button
+                android:id="@+id/join_btn_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/login_loginbtn_shape"
+                android:text="인증"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/btn_logins"
+                android:layout_marginLeft="25dp"
+                />
+
+
+        </LinearLayout>
 
 
 
@@ -86,23 +104,24 @@
 
 
 
-        <Button
-            android:id="@+id/join_btn_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/login_loginbtn_shape"
-            android:text="이메일 인증하기"
-            android:textColor="@color/white"
-            app:backgroundTint="@color/btn_logins" />
+
         <EditText
             android:id="@+id/joinus_edit_eamil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="인증번호를 입력하세요"
             android:visibility="invisible"
             />
+        <TextView
+            android:id="@+id/join_tv_emailcheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="#F84242"
+            android:layout_marginLeft="10dp"
 
+
+            />
 
         <Button
             android:id="@+id/join_btn_continue"
