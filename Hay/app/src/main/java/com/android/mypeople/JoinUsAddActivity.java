@@ -235,7 +235,7 @@ public class JoinUsAddActivity extends AppCompatActivity {
 
 
     ////////////////////////////////////////////////////////////////////////
-    // 버튼 클릭 리스너                                                  //
+    // 버튼 클릭 리스너                                                       //
     //                                                                    //
     //                                                                    //
     ////////////////////////////////////////////////////////////////////////
@@ -260,27 +260,31 @@ public class JoinUsAddActivity extends AppCompatActivity {
 
 
 
-
+            // 회원정보 입력란 공란시 뜨는 다이얼로그
             if(!test.matches(pwVaildation) || test.equals("") || !uPw.equals(uPwCheck)) {
                 new AlertDialog.Builder(JoinUsAddActivity.this)
-                        .setTitle("패스워드를 확인하세요")
+                        .setTitle("  패스워드를 확인하세요")
+                        .setIcon(R.drawable.joinus_caution_icon)
                         .setPositiveButton("확인", null)
                         .show();
 
             }else if(!test2.matches(telVaildation) || test2.equals("") || test2.length()<13) {
                 new AlertDialog.Builder(JoinUsAddActivity.this)
-                        .setTitle("전화번호를 확인하세요")
+                        .setTitle("  전화번호를 확인하세요")
+                        .setIcon(R.drawable.joinus_caution_icon)
                         .setPositiveButton("확인", null)
                         .show();
             }else if(!test3.matches(nameVaildation) ||test3.equals("") ){
                 new AlertDialog.Builder(JoinUsAddActivity.this)
-                        .setTitle("이름을 확인하세요")
+                        .setTitle("  이름을 확인하세요")
+                        .setIcon(R.drawable.joinus_caution_icon)
                         .setPositiveButton("확인", null)
                         .show();
-
+            // 전화번호 중복체크시 발생된 스트링 문장을 가져옴
             }else if(tv_telcheck.getText().toString().equals("중복된 전화번호 입니다.")){
                 new AlertDialog.Builder(JoinUsAddActivity.this)
-                        .setTitle("중복된 전화번호는 사용하실 수 없습니다.")
+                        .setTitle("  중복된 전화번호는 사용하실 수 없습니다.")
+                        .setIcon(R.drawable.joinus_caution_icon)
                         .setPositiveButton("확인", null)
                         .show();
             } else {
