@@ -36,6 +36,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.blogspot.atifsoftwares.circularimageview.CircularImageView;
+import com.google.android.material.bottomappbar.BottomAppBar;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -72,6 +73,10 @@ public class AddFriendsActivity extends AppCompatActivity {
     int limit = 0;
     int t1 = 0, t2 = 0 ,t3 = 0, t4 = 0, t5 = 0 ;
     int limitT1 = 0, limitT2 = 0, limitT3 = 0, limitT4 = 0, limitT5 = 0;
+
+    //앱바
+    BottomAppBar bab;
+    boolean isCenter=true;
 
 
     ////////////////////////////////////////////////////
@@ -120,6 +125,8 @@ public class AddFriendsActivity extends AppCompatActivity {
         tag4 = findViewById(R.id.add_tag4);
         tag5 = findViewById(R.id.add_tag5);
 
+        // 홈버튼 액션을 위한 선언
+        bab=findViewById(R.id.bab);
 
         //2020.12.29태현
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
@@ -712,6 +719,21 @@ public class AddFriendsActivity extends AppCompatActivity {
 
         return result;
     }
+
+//    /////////////////앱바//////////////////////
+//    public void clickFab(View view) { // 하단 앱바 홈버튼 클릭시
+//        isCenter= !isCenter;
+//
+//        if(isCenter) bab.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_CENTER);
+//        else bab.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_END);
+//
+//        Intent intent = new Intent(MyPageActivity.this, MainActivity.class);
+//        intent.putExtra("macIP", ipurl);
+//        intent.putExtra("uSeqno", seq);
+//        intent.putExtra("action", "Show_List");
+//        startActivity(intent);
+//    }
+//    /////////////////앱바//////////////////////
 
 }///----END
 

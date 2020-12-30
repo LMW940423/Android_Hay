@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.android.material.bottomappbar.BottomAppBar;
+
 public class TAGActivity extends AppCompatActivity {
 
     String urlAddr = null;
@@ -18,6 +20,10 @@ public class TAGActivity extends AppCompatActivity {
     Bean_tag bean_tag=null;
     int seq;
     String macIP;
+
+    //앱바
+    BottomAppBar bab;
+    boolean isCenter=true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +43,10 @@ public class TAGActivity extends AppCompatActivity {
         Etag5 = findViewById(R.id.tag_edit_tagEdit5);
         findViewById(R.id.tag_insert_insertBtn).setOnClickListener(mClickListener);
         findViewById(R.id.tag__cancel_cancelBtn).setOnClickListener(mClickListener);
+
+        // 홈버튼 액션을 위한 선언
+        bab=findViewById(R.id.bab);
+
 
     }
     View.OnClickListener mClickListener = new View.OnClickListener() {
@@ -112,4 +122,18 @@ public class TAGActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+    ///////////////앱바//////////////////////
+    public void clickFab(View view) { // 하단 앱바 홈버튼 클릭시
+        isCenter= !isCenter;
+
+        if(isCenter) bab.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_CENTER);
+        else bab.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_END);
+
+        Intent intent = new Intent(TAGActivity.this, MainActivity.class);
+        intent.putExtra("macIP", macIP);
+        intent.putExtra("uSeqno", seq);
+        intent.putExtra("action", "Show_List");
+        startActivity(intent);
+    }
+    ///////////////앱바//////////////////////
 }

@@ -3,6 +3,8 @@ package com.android.mypeople;
 import android.media.Image;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
+
 public class Bean_friendslist {
 
     /*공용이므로 항상 수정사항 알려주시기 바랍니다.*/
@@ -10,7 +12,7 @@ public class Bean_friendslist {
     //Field
     int fSeqno;
     int user_uSeqno;
-    String fName;
+    public String fName;
     String fTel;
     String fAddress;
     String fRelation;
@@ -24,6 +26,7 @@ public class Bean_friendslist {
     int fTag5;
     int photo;
     String fEmail;
+    ArrayList<Bean_friendslist> bean_friendslists = null;
 
     //Constructor
 
@@ -56,6 +59,9 @@ public class Bean_friendslist {
     public Bean_friendslist() {
     }
 
+    public Bean_friendslist(ArrayList<Bean_friendslist> bean_friendslists) {
+        this.bean_friendslists = bean_friendslists;
+    }
 
     //Getters and Setters
     public int getfSeqno() {
@@ -184,5 +190,13 @@ public class Bean_friendslist {
 
     public void setfEmail(String fEmail) {
         this.fEmail = fEmail;
+    }
+
+    public ArrayList<Bean_friendslist> getBean_friendslists() {
+        return bean_friendslists;
+    }
+
+    public void setBean_friendslists(ArrayList<Bean_friendslist> bean_friendslists) {
+        this.bean_friendslists = bean_friendslists;
     }
 }

@@ -36,7 +36,7 @@
                 android:gravity="center"
 
                 />
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/main_Edit_SearchText"
                 android:layout_width="200sp"
                 android:layout_height="50sp"
@@ -44,6 +44,8 @@
                 android:gravity="center"
                 android:inputType="text"
                 android:imeOptions="actionDone"
+                android:textColorHint="#555555"
+                android:completionThreshold="1"
                 tools:ignore="Autofill,TextFields"
                 android:textSize="17sp"
 
@@ -159,6 +161,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="9"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:onClick="hideKeyboard"
             />
     </LinearLayout>
 
@@ -178,7 +181,7 @@
         android:backgroundTint="@color/white"
         app:fabSize="normal"
         app:layout_anchor="@id/bab"
-        android:src="@drawable/ic_action_home"
+        android:src="@drawable/ic_action_refrash"
         android:onClick="clickFab"
         app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
         />

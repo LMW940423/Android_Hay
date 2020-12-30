@@ -1,10 +1,12 @@
 package com.android.mypeople;
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -15,12 +17,79 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder>{
     String TAG = "RecyclerAdapter";
+    String TAG2 = "RecyclerAdapter 체크";
+
+    private ArrayList<Bean_friendslist> mDataset = null;
+    ArrayList<Bean_friendslist> unFilteredlist = null;
+    ArrayList<Bean_friendslist> filteredList = null;
+    Context context;
+
+
+
+
+//    @Override
+//    public Filter getFilter() {
+//        return new Filter() {
+//            @Override
+//            protected FilterResults performFiltering(CharSequence constraint) {
+//                FilterResults results = new FilterResults();
+//
+////                String charString = constraint.toString();
+////                if(constraint == null || constraint.length() == 0) {
+////                    Log.v(TAG2," results-1 : " + constraint);
+////                    mDataset = unFilteredlist;
+//////                    results.values = listViewItemList ;
+//////                    results.count = listViewItemList.size() ;
+////                    Log.v(TAG2," results0 : ");
+////                } else {
+////                    ArrayList<Bean_friendslist> filteringList = new ArrayList<>();
+////                    for(Bean_friendslist name : mDataset) {
+////                        Log.v(TAG2," results99 : " + constraint);
+////                        if(name.getfName().contains(charString)) {
+////                            filteringList.add(name);
+////                            Log.v(TAG2," results1 : " + name.getfName());
+////                        }
+////                    }
+////                    mDataset = filteringList;
+////                }
+////                FilterResults filterResults = new FilterResults();
+////                filterResults.values = mDataset;
+//
+//                if (constraint == null || constraint.length() == 0) {
+//                    results.values = mDataset;
+//                    results.count = mDataset.size();
+//                } else {
+//                    ArrayList<Bean_friendslist> itemList = new ArrayList<Bean_friendslist>();
+//
+//                    for (Bean_friendslist item : mDataset) {
+//                        if (item.getfName().contains(constraint.toString()) ||
+//                                item.getfComment().contains(constraint.toString())) {
+//                            itemList.add(item);
+//                        }
+//                    }
+//                    results.values = itemList;
+//                    results.count = itemList.size();
+//                }
+//                return results;
+//            }
+//            @Override
+//            protected void publishResults(CharSequence constraint, FilterResults results) {
+//                filteredList = (ArrayList<Bean_friendslist>) results.values;
+//                Log.v(TAG2," results2 : " + results);
+//                Log.v(TAG2," results3 : " + (ArrayList<Bean_friendslist>) results.values);
+//                notifyDataSetChanged();
+//            }
+//        };
+//    }
+
+
     //------------------Click Event------------------
     public interface OnItemClickListener{
         void onItemClick(View v, int position);
@@ -28,14 +97,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
     private OnItemClickListener mListener = null;
 
-    public void setOnItemClickListener(OnItemClickListener listener){
+    public void setOnItemClickListener(OnItemClickListener listener) {
         this.mListener = listener;
+        Log.v(TAG2, "setOnItemClickListener2");
     }
     //------------------Click Event------------------
-
-    private ArrayList<Bean_friendslist> mDataset = null;
-    ArrayList<String> unFilteredlist;
-    ArrayList<String> filteredList;
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -50,6 +116,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
         MyViewHolder(View v) {
             super(v);
+            Log.v(TAG2, "MyViewHolder5");
 
 
             tag_1 = v.findViewById(R.id.main_ImgV_tag1);
@@ -65,6 +132,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Log.v(TAG2, "MyViewHolder onClick");
 
                     int position=getAdapterPosition();//어뎁터 포지션값
                     // 뷰홀더에서 사라지면 NO_POSITION 을 리턴
@@ -83,12 +151,25 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     // 메인 액티비티에서 받은 myDataset을 가져오
     public RecyclerAdapter(MainActivity mainActivity, int member, ArrayList<Bean_friendslist> myDataset) {
         mDataset = myDataset;
+        this.filteredList = myDataset;
+        this.unFilteredlist = myDataset;
+        Log.v(TAG2, "RecyclerAdapter1");
 //
     }
+
+    public RecyclerAdapter(Context context, ArrayList<Bean_friendslist> list) {
+        super();
+        this.context = context;
+        this.mDataset = list;
+        this.filteredList = list;
+        this.unFilteredlist = list;
+    }
+
 
     // Create new views (invoked by the layout manager)
     @Override
     public RecyclerAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.v(TAG2, "onCreateViewHolder4");
         // create a new view
         LinearLayout v = (LinearLayout) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.main_recycler_items, parent, false);
@@ -100,6 +181,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     // 표시하는 메소드
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+
+        Log.v(TAG2, "onBindViewHolder6");
         Log.v(TAG, "구간 1 -----------------");
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
@@ -366,8 +449,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
+        Log.v(TAG2, "getItemCount3");
+
+//        if(mDataset == null){
+//            return filteredList.size();
+//        }
+
         return mDataset.size();
     }
+
+
 
 
 }
