@@ -57,6 +57,11 @@ public class Main_CustomDialog extends AppCompatActivity{
     String fComment = null;
     String fAddress = null;
     String fEmail = null;
+    String Tag1 = null;
+    String Tag2 = null;
+    String Tag3 = null;
+    String Tag4 = null;
+    String Tag5 = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +85,11 @@ public class Main_CustomDialog extends AppCompatActivity{
         fComment = intent.getStringExtra("fComment");
         fAddress = intent.getStringExtra("fAddress");
         fEmail = intent.getStringExtra("fEmail");
+        Tag1 = intent.getStringExtra("Tag1");
+        Tag2 = intent.getStringExtra("Tag2");
+        Tag3 = intent.getStringExtra("Tag3");
+        Tag4 = intent.getStringExtra("Tag4");
+        Tag5 = intent.getStringExtra("Tag5");
 
         tv_Name = findViewById(R.id.main_Dialog_Tv_Name);
         tv_Call = findViewById(R.id.main_Dialog_Tv_Call);

@@ -14,6 +14,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.preference.PreferenceManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -23,6 +27,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -31,12 +37,18 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     //
@@ -46,13 +58,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private ArrayList<Bean_tag> tags = null;
     private RecyclerAdapter adapter = null;
 
+    private ArrayList<Bean_friendslist> list;          // 데이터를 넣은 리스트변수
+
     String TAG = "MainActivity";
     BottomAppBar bab;
     boolean isCenter=true;
     Spinner spinner_field = null;
     Class_LMW class_lmw = new Class_LMW();
     LinearLayout linearLayout = null;
-    EditText searchText = null;
+    AutoCompleteTextView searchText = null;
     Button addBtn = null;
     String macIP;
     String urlAddr = null;
@@ -68,15 +82,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     String putExtraText = null;
     int dataSize = 0;
     TextView tv_Count = null;
+    ImageView toolbar_Hay = null;
 
     RadioButton radioBtn_Name = null;
     RadioButton radioBtn_New = null;
     RadioButton radioBtn_Tag = null;
     RadioGroup radioGroup = null;
 
-    // 스피너 (태그 선택 안했을 경우 이미지 필요)
-    int tag[] = {R.drawable.tagspinner, R.drawable.main_spinner_tag1, R.drawable.main_spinner_tag2, R.drawable.main_spinner_tag3, R.drawable.main_spinner_tag4, R.drawable.main_spinner_tag5};
-    String tagName[] = {"TAG", "TAG1", "TAG2", "TAG3", "TAG4", "TAG5"};
+    Bean_friendslist bean_friendslist = new Bean_friendslist();
+
+    // 스피너
+    int tag[] = {R.drawable.tag_small, R.drawable.tag1, R.drawable.tag2, R.drawable.tag3, R.drawable.tag4, R.drawable.tag5};
+    String tagName[] = {"", "TAG1", "TAG2", "TAG3", "TAG4", "TAG5"};
     Spinner spinner = null;
 
     @Override
@@ -84,7 +101,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        searchText = findViewById(R.id.main_Edit_SearchText);
+        searchText = (AutoCompleteTextView)findViewById(R.id.main_Edit_SearchText);
+
         tv_Count = findViewById(R.id.main_Text_Count);
 
         // 값 받기
@@ -194,6 +212,31 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         layoutManager = new LinearLayoutManager(this);
         listView.setLayoutManager(layoutManager);
 
+
+
+
+
+
+
+//        searchText.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+////                adapter.getFilter().filter(s);
+////                String text = searchText.getText().toString();
+////                adapter.fillter(text);
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+//            }
+//        });
+
         // 툴바 생성
         Toolbar toolbar = (Toolbar)findViewById(R.id.main_toolbar); // 상단 툴바
         toolbar.setTitle(R.string.app_name);
@@ -213,6 +256,25 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         // 홈버튼 액션을 위한 선언
         bab=findViewById(R.id.bab);
+
+        toolbar_Hay = findViewById(R.id.toolbar_title);
+        toolbar_Hay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Hay!", Toast.LENGTH_SHORT).show();
+
+                isCenter= !isCenter;
+
+                if(isCenter) bab.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_CENTER);
+                else bab.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_END);
+
+                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                intent.putExtra("macIP", macIP);
+                intent.putExtra("uSeqno", userSeqno);
+                intent.putExtra("action", "Show_List");
+                startActivity(intent);
+            }
+        });
 
         // 배경 선택 시 키보드 내리기 위한 선언
         outLayout = findViewById(R.id.main_coordinator_outer);
@@ -235,11 +297,53 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
+
+
     @Override
     protected void onResume() {
         super.onResume();
+        Bean_friendslist bean_friendslist = new Bean_friendslist();
         Log.v(TAG, "onResume urlAddr : " + urlAddr);
-        connectGetData();
+        Intent intent = new Intent();
+        // 검색 기능 TEST
+
+        // 리스트를 생성한다.
+        list = new ArrayList<Bean_friendslist>();
+        list = connectGetData(); // db를 통해 받은 데이터를 담는다.
+
+        if(list.size() == 0){ // 만약 검색결과가 없다면
+
+        }else{ // 검색 결과가 있다면
+            String tempValue = null; // list의 값을 돌려가며 저장시키기 위한 변수
+            ArrayList<String> tempValues = new ArrayList<String>(); // tempValue의 값을 배열에 저장시킴
+            ArrayList<String> deleteDuplData = new ArrayList<String>(); // tempValues 배열의 중복값을 제거해서 다시 저장시킴
+            ArrayList<String> values = new ArrayList<String>();
+
+            for(int i = 0; i < list.size(); i++){ // list의 크기만큼 돌려가며 데이터를 추출한다.
+                tempValue = list.get(i).getfName(); // 이름의 모든 값을 받는다.
+                tempValues.add(tempValue);
+                tempValue = list.get(i).getfComment(); // 코멘트의 모든 값을 받는다.
+                tempValues.add(tempValue);
+                tempValue = list.get(i).getfRelation(); // 관계의 모든 값을 받는다.
+                tempValues.add(tempValue);
+                tempValue = list.get(i).getfAddress(); // 주소의 모든 값을 받는다.
+                tempValues.add(tempValue);
+                tempValue = list.get(i).getfEmail(); // 이메일의 모든 값을 받는다.
+                tempValues.add(tempValue);
+
+                for(String item : tempValues){ // 배열값의 중복 제거 후 deleteDupl 배열에 저장시킨다.
+                    if(!deleteDuplData.contains(item))
+                        deleteDuplData.add(item);
+                }
+
+                Log.v(TAG, "배열값 확인 : " + deleteDuplData);
+            }
+
+            // 리스트에 검색될 데이터(단어)를 추가한다.
+            searchText.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, deleteDuplData)); // 중복이 제거된 배열값을 넣어서 리스트를 띄운다.
+        }
+
+
 
         // 리스트 클릭 이벤트
 
@@ -264,6 +368,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 intent.putExtra("fComment", data.get(position).getfComment());
                 intent.putExtra("fAddress", data.get(position).getfAddress());
                 intent.putExtra("fEmail", data.get(position).getfEmail());
+                intent.putExtra("Tag1", tags.get(position).getTag1());
+                intent.putExtra("Tag1", tags.get(position).getTag2());
+                intent.putExtra("Tag1", tags.get(position).getTag3());
+                intent.putExtra("Tag1", tags.get(position).getTag4());
+                intent.putExtra("Tag1", tags.get(position).getTag5());
 
                 Log.v(TAG,"macIP : " + macIP);
                 Log.v(TAG, "클릭한 사람 seqno : " + data.get(position).getfSeqno());
@@ -288,7 +397,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
-    private void connectGetData(){
+    private ArrayList<Bean_friendslist> connectGetData(){
+        ArrayList<Bean_friendslist> beanList = new ArrayList<Bean_friendslist>();
         try {
             ///////////////////////////////////////////////////////////////////////////////////////
             // Date : 2020.12.25
@@ -334,15 +444,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 Log.v(TAG, "dataSize = " + dataSize);
                 tv_Count.setText("검색결과 : " + dataSize + "명");
             }
-
+        beanList = data;
 
         }catch (Exception e){
             e.printStackTrace();
         }
-
+        return beanList;
     }
-
-
 
 //        AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
 //            Intent intent = null;
@@ -415,6 +523,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                        SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+                        SharedPreferences.Editor autoLogin = auto.edit();
+
+                        autoLogin.clear();
+                        autoLogin.commit();
                         startActivity(intent);
                         // 아이디값 넘기기?
                     }
@@ -440,6 +553,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         startActivity(intent);
     }
 
+    public void hideKeyboard(View view) { // 레이아웃 클릭 시 키보드 내리기 (실패)
+        view = getCurrentFocus();
+        if(view != null){
+            InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -463,7 +584,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             Log.v(TAG, "버튼 클릭 : " + checkedId);
 
             switch (checkedId){
-                case 2131231000: // 가나다순 (ASC)
+                case 2131231019: // 가나다순 (ASC)
                     Comparator<Bean_friendslist> solt_Name = new Comparator<Bean_friendslist>() {
                         @Override
                         public int compare(Bean_friendslist o1, Bean_friendslist o2) {
@@ -475,7 +596,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     adapter.notifyDataSetChanged();
                     break;
 
-                case 2131231001: // 최신순 (DESC)
+                case 2131231020: // 최신순 (DESC)
                     Comparator<Bean_friendslist> solt_new = new Comparator<Bean_friendslist>() {
                         @Override
                         public int compare(Bean_friendslist o1, Bean_friendslist o2) {
@@ -486,7 +607,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     adapter.notifyDataSetChanged() ;
                     break;
 
-                case 2131231002: // 태그순 (ASC)
+                case 2131231021: // 태그순 (ASC)
                     Comparator<Bean_friendslist> solt_Tag = new Comparator<Bean_friendslist>() {
                         @Override
                         public int compare(Bean_friendslist o1, Bean_friendslist o2) {
@@ -538,4 +659,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         }
     };
+
+
 }

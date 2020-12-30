@@ -15,6 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomappbar.BottomAppBar;
+
 
 public class MyPageActivity extends AppCompatActivity {
     //탈퇴합니다 메세지 받을 부분 없애도 될거같긴한데 일단 둔다
@@ -39,6 +41,10 @@ public class MyPageActivity extends AppCompatActivity {
 
     String telVaildation = "^\\d{3}-\\d{3,4}-\\d{4}$";
     String nameVaildation = "^[a-zA-Zㄱ-ㅎ가-힣]+$";
+
+    //앱바
+    BottomAppBar bab;
+    boolean isCenter=true;
 
 
     int seq;
@@ -79,7 +85,8 @@ public class MyPageActivity extends AppCompatActivity {
 
         mypage_namemessage=findViewById(R.id.mypage_namemessage);
 
-
+        // 홈버튼 액션을 위한 선언
+        bab=findViewById(R.id.bab);
 
         mypage_userdelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,6 +176,20 @@ public class MyPageActivity extends AppCompatActivity {
         });
 
     }
+    /////////////////앱바//////////////////////
+    public void clickFab(View view) { // 하단 앱바 홈버튼 클릭시
+        isCenter= !isCenter;
+
+        if(isCenter) bab.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_CENTER);
+        else bab.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_END);
+
+        Intent intent = new Intent(MyPageActivity.this, MainActivity.class);
+        intent.putExtra("macIP", ipurl);
+        intent.putExtra("uSeqno", seq);
+        intent.putExtra("action", "Show_List");
+        startActivity(intent);
+    }
+    /////////////////앱바//////////////////////
 
     @Override
     protected void onResume() {
