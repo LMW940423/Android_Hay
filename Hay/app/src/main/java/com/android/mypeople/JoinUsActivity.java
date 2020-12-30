@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -110,14 +111,20 @@ public class JoinUsActivity extends AppCompatActivity {
                 if (edyo.equals("") || !android.util.Patterns.EMAIL_ADDRESS.matcher(edyo).matches()) {
                     tv_idcheck.setText("입력정보를 확인해주세요");
                 }else {
-                    JoinUs_CustomDialog joinUs_customDialog = new JoinUs_CustomDialog(JoinUsActivity.this);
-                    joinUs_customDialog.closeDialog();
+
                     Log.v(TAG, "urlAddrloginduplicationCheck : " + urlAddrloginduplicationCheck);
                     urlAddrloginduplicationCheck = "http://" + macIP + ":8080/mypeople/loginduplicationCheck.jsp?userid=" + edyo;
                     count = loginduplicationCheck();
                     if (count == 0) {
+
                         sendMail.sendSecurityCode2(getApplicationContext(), edyo);
+                        JoinUs_CustomDialog joinUs_customDialog = new JoinUs_CustomDialog(JoinUsActivity.this);
+                        joinUs_customDialog.closeDialog();
                         editEmail.setVisibility(View.VISIBLE);
+                        tv_idcheck.setText("사용가능한 아이디 입니다.");
+                        String strColor = "#077C0C";
+                        tv_idcheck.setTextColor(Color.parseColor(strColor));
+
 
                     } else {
                         tv_idcheck.setText("중복된 아이디 입니다.");
