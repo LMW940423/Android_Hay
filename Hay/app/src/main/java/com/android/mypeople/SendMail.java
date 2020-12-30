@@ -55,7 +55,7 @@ public class SendMail extends AppCompatActivity {
             Log.v("여기","SenMailClass4");
             gMailSender2.sendMail("이메일인증", "이메일인증코드는 : " + code + " 입니다.", sendTo);
             Log.v("여기","SenMailClass5");
-            Toast.makeText(context, "이메일을 성공적으로 보냈습니다.", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "이메일을 성공적으로 보냈습니다.", Toast.LENGTH_SHORT).show();
             Log.v("여기","SenMailClass6");
         } catch (SendFailedException e) {
             Log.v("여기","SenMailClass7");

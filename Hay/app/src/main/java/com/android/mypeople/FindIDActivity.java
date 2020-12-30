@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.util.Log;
@@ -50,7 +51,7 @@ public class FindIDActivity extends AppCompatActivity {
 
 
         //키보드 화면 터치시 숨기기위해 선언.
-        ll_hide = findViewById(R.id.findid_ll_hide);
+        ll_hide = findViewById(R.id.ll_hide);
         inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);  //OS에서 지원해주는 메소드이다.
 
         //키보드 화면 터치시 숨김.
@@ -91,12 +92,14 @@ public class FindIDActivity extends AppCompatActivity {
                                 .setPositiveButton("확인", null)
                                 .show();
                     }else{
-                        new AlertDialog.Builder(FindIDActivity.this)
-                                .setTitle("계정 찾기 결과입니다.")
-                                .setMessage(result)
-                                .setPositiveButton("로그인", mClick)
-                                .setNegativeButton("다시하기", null)
-                                .show();
+                        //new AlertDialog.Builder(FindIDActivity.this);
+//                                .setTitle("계정 찾기 결과입니다.")
+//                                .setMessage(result)
+//                                .setPositiveButton("로그인", mClick)
+//                                .setNegativeButton("다시하기", null)
+//                                .show();
+                         FindID_CustomDialog FindID_CustomDialog = new FindID_CustomDialog(FindIDActivity.this,result);
+                         FindID_CustomDialog.callDialog();
 
                     }
 

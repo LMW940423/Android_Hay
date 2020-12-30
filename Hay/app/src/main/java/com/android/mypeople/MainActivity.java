@@ -415,6 +415,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                        SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+                        SharedPreferences.Editor autoLogin = auto.edit();
+                        autoLogin.clear();
+                        autoLogin.commit();
                         startActivity(intent);
                         // 아이디값 넘기기?
                     }
