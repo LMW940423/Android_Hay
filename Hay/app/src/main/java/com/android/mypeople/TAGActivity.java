@@ -1,9 +1,14 @@
 package com.android.mypeople;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.TabActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.DialogPreference;
+import android.preference.Preference;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -68,10 +73,23 @@ public class TAGActivity extends AppCompatActivity {
                     urlAddr1 = "http://192.168.219.100:8080/mypeople/tagActivityUpdate.jsp?tag1="+tag1+"&tag2="+tag2+"&tag3="+tag3+"&tag4="+tag4+"&tag5="+tag5+"&seq="+seq;
                     connectUpdateData();
 
-
+                    new AlertDialog.Builder(TAGActivity.this)
+                            .setTitle("태그수정이 완료 되었습니다")
+                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(TAGActivity.this,MainActivity.class);
+                                    intent.putExtra("macIP",macIP);
+                                    intent.putExtra("action","Show_List");
+                                    startActivity(intent);
+                                }
+                            })
+                            .show();
                     break;
                 case R.id.tag__cancel_cancelBtn:
                     Intent intent = new Intent(TAGActivity.this,MainActivity.class);
+                    intent.putExtra("macIP",macIP);
+                    intent.putExtra("action","Show_List");
                     startActivity(intent);
                     break;
 

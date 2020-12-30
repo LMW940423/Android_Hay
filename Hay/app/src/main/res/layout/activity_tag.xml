@@ -88,6 +88,7 @@
                     android:id="@+id/tag_edit_tagEdit1"
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
+                    android:maxLength="5"
                     />
 
             </LinearLayout>
@@ -118,6 +119,7 @@
                     android:id="@+id/tag_edit_tagEdit2"
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
+                    android:maxLength="5"
                     />
 
             </LinearLayout>
@@ -149,6 +151,7 @@
                     android:id="@+id/tag_edit_tagEdit3"
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
+                    android:maxLength="5"
                     />
 
 
@@ -182,6 +185,7 @@
                     android:id="@+id/tag_edit_tagEdit4"
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
+                    android:maxLength="5"
                     />
 
             </LinearLayout>
@@ -213,6 +217,7 @@
                     android:id="@+id/tag_edit_tagEdit5"
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
+                    android:maxLength="5"
                     />
 
             </LinearLayout>
