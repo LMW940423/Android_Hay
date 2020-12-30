@@ -26,8 +26,6 @@
         <activity android:name=".FindIDActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".JoinUsActivity" />
-        <activity android:name=".AddFriendsActivity" />
-        <activity android:name=".DetailViewActivity" />
         <activity android:name=".MyPageActivity" />
         <activity android:name=".ExplanationActivity" />
         <activity android:name=".MainActivity" />
