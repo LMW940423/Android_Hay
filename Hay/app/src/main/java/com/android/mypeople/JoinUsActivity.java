@@ -26,7 +26,7 @@ public class JoinUsActivity extends AppCompatActivity {
     EditText et_id;
     Button btn_continue;
     Button btn_email;
-    TextView tv_idcheck;
+    TextView tv_idcheck,tv_emailcheck;
     Intent intent;
     String macIP;
     InputMethodManager inputMethodManager ;
@@ -54,7 +54,7 @@ public class JoinUsActivity extends AppCompatActivity {
         btn_continue = findViewById(R.id.join_btn_continue);
         btn_email = findViewById(R.id.join_btn_email);
         tv_idcheck = findViewById(R.id.join_tv_idcheck);
-
+        tv_emailcheck = findViewById(R.id.join_tv_emailcheck);
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                         .permitDiskReads()
                         .permitDiskWrites()
@@ -78,20 +78,23 @@ public class JoinUsActivity extends AppCompatActivity {
 
 
 
-                    Log.v(TAG,sendMail.emailCode);
-                    if(sendMail.emailCode.equals(editEmail.getText().toString())){
+//                    Log.v(TAG,sendMail.emailCode);
+                    if(et_idsend.equals("")){
+                        Log.v(TAG, "et_idsend = " + et_idsend);
+                        tv_idcheck.setText("이메일인증을 해주세요.");
+                    }else if(sendMail.emailCode == null){
+                        tv_idcheck.setText("이메일인증을 해주세요.");
+                        Log.v(TAG, "sendEmail : " + sendMail.emailCode);
+                    }else if(sendMail.emailCode.equals(editEmail.getText().toString())){
                         intent = new Intent(JoinUsActivity.this, JoinUsAddActivity.class);
                         // 입력받은 이메일 넘김.
                         intent.putExtra("et_idsend", et_idsend);
                         intent.putExtra("macIP", macIP);  // IP주소를 보내줌.
                         Log.v(TAG, "macIP123 : " + macIP);
                         startActivity(intent);
-                    }else{
-                        tv_idcheck.setText("이메일인증을 해주세요.");
+                    }else {
+                        tv_emailcheck.setText("인증에 실패하였습니다.");
                     }
-
-
-
 
 
             }
@@ -102,10 +105,13 @@ public class JoinUsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String edyo = et_id.getText().toString();
 
+
+
                 if (edyo.equals("") || !android.util.Patterns.EMAIL_ADDRESS.matcher(edyo).matches()) {
                     tv_idcheck.setText("입력정보를 확인해주세요");
                 }else {
-
+                    JoinUs_CustomDialog joinUs_customDialog = new JoinUs_CustomDialog(JoinUsActivity.this);
+                    joinUs_customDialog.closeDialog();
                     Log.v(TAG, "urlAddrloginduplicationCheck : " + urlAddrloginduplicationCheck);
                     urlAddrloginduplicationCheck = "http://" + macIP + ":8080/mypeople/loginduplicationCheck.jsp?userid=" + edyo;
                     count = loginduplicationCheck();
