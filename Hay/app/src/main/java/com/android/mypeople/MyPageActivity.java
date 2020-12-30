@@ -203,6 +203,7 @@ public class MyPageActivity extends AppCompatActivity {
             myPageNetworkTask myPageNetworkTask = new myPageNetworkTask(MyPageActivity.this, urlAddr);
             Object obj = myPageNetworkTask.execute().get();
             bean_user = (Bean_user) obj;
+
             mypage_tel.setText(bean_user.getuTel());
             mypage_name.setText(bean_user.getuName());
             mypage_id.setText(bean_user.getuId());

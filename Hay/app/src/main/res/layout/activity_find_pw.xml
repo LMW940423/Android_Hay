@@ -6,6 +6,7 @@
     android:background="@color/white"
     android:gravity="center"
     android:orientation="vertical"
+    android:id="@+id/ll_hide"
     >
     <LinearLayout
         android:layout_width="match_parent"
@@ -54,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="이메일 주소를 입력해주세요."
-            android:inputType="textPassword"
+            android:inputType="textEmailAddress"
             android:padding="10dp"
             android:textColor="@color/input_register"
             android:textColorHint="@color/input_register_hint"
@@ -76,6 +77,7 @@
             android:text="일치하는 계정이 없습니다."
             android:textColor="#ED5C5C"
             android:layout_marginLeft="10dp"
+            android:visibility="invisible"
 
             />
 

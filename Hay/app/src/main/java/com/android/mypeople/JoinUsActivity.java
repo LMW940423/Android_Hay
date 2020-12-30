@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -21,14 +22,19 @@ import java.util.regex.Pattern;
 public class JoinUsActivity extends AppCompatActivity {
     //
     final static String TAG = "JoinUsActivty";
+    EditText editEmail;
     EditText et_id;
     Button btn_continue;
+    Button btn_email;
     TextView tv_idcheck;
     Intent intent;
     String macIP;
     InputMethodManager inputMethodManager ;
     LinearLayout ll_hide;
     String urlAddrloginduplicationCheck = null;
+    int Idduplication = 0;
+
+    SendMail sendMail = new SendMail();
 
     int count = 0;
 
@@ -44,10 +50,16 @@ public class JoinUsActivity extends AppCompatActivity {
 
         et_id = findViewById(R.id.join_et_id);
 
-
+        editEmail = findViewById(R.id.joinus_edit_eamil);
         btn_continue = findViewById(R.id.join_btn_continue);
-
+        btn_email = findViewById(R.id.join_btn_email);
         tv_idcheck = findViewById(R.id.join_tv_idcheck);
+
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                        .permitDiskReads()
+                        .permitDiskWrites()
+                        .permitNetwork().build()
+        );
 
 
 
@@ -66,22 +78,8 @@ public class JoinUsActivity extends AppCompatActivity {
 
 
 
-                Log.v(TAG, "urlAddrloginduplicationCheck : " + urlAddrloginduplicationCheck);
-
-
-
-                String edyo = et_id.getText().toString();
-
-                if(edyo.equals("") || !android.util.Patterns.EMAIL_ADDRESS.matcher(edyo).matches()){
-                    tv_idcheck.setText("입력정보를 확인해주세요");
-
-
-                } else {
-
-                    urlAddrloginduplicationCheck = "http://"+macIP+":8080/mypeople/loginduplicationCheck.jsp?userid="+edyo;
-                    count = loginduplicationCheck();
-
-                    if(count == 0){
+                    Log.v(TAG,sendMail.emailCode);
+                    if(sendMail.emailCode.equals(editEmail.getText().toString())){
                         intent = new Intent(JoinUsActivity.this, JoinUsAddActivity.class);
                         // 입력받은 이메일 넘김.
                         intent.putExtra("et_idsend", et_idsend);
@@ -89,13 +87,37 @@ public class JoinUsActivity extends AppCompatActivity {
                         Log.v(TAG, "macIP123 : " + macIP);
                         startActivity(intent);
                     }else{
-                        tv_idcheck.setText("중복된 아이디 입니다.");
+                        tv_idcheck.setText("이메일인증을 해주세요.");
                     }
 
 
 
 
+
+            }
+        });
+
+        btn_email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String edyo = et_id.getText().toString();
+
+                if (edyo.equals("") || !android.util.Patterns.EMAIL_ADDRESS.matcher(edyo).matches()) {
+                    tv_idcheck.setText("입력정보를 확인해주세요");
+                }else {
+
+                    Log.v(TAG, "urlAddrloginduplicationCheck : " + urlAddrloginduplicationCheck);
+                    urlAddrloginduplicationCheck = "http://" + macIP + ":8080/mypeople/loginduplicationCheck.jsp?userid=" + edyo;
+                    count = loginduplicationCheck();
+                    if (count == 0) {
+                        sendMail.sendSecurityCode2(getApplicationContext(), edyo);
+                        editEmail.setVisibility(View.VISIBLE);
+
+                    } else {
+                        tv_idcheck.setText("중복된 아이디 입니다.");
+                    }
                 }
+
             }
         });
 

@@ -369,10 +369,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 intent.putExtra("fAddress", data.get(position).getfAddress());
                 intent.putExtra("fEmail", data.get(position).getfEmail());
                 intent.putExtra("Tag1", tags.get(position).getTag1());
-                intent.putExtra("Tag1", tags.get(position).getTag2());
-                intent.putExtra("Tag1", tags.get(position).getTag3());
-                intent.putExtra("Tag1", tags.get(position).getTag4());
-                intent.putExtra("Tag1", tags.get(position).getTag5());
+                intent.putExtra("Tag2", tags.get(position).getTag2());
+                intent.putExtra("Tag3", tags.get(position).getTag3());
+                intent.putExtra("Tag4", tags.get(position).getTag4());
+                intent.putExtra("Tag5", tags.get(position).getTag5());
 
                 Log.v(TAG,"macIP : " + macIP);
                 Log.v(TAG, "클릭한 사람 seqno : " + data.get(position).getfSeqno());
@@ -584,7 +584,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             Log.v(TAG, "버튼 클릭 : " + checkedId);
 
             switch (checkedId){
-                case 2131231019: // 가나다순 (ASC)
+                case 2131231021: // 가나다순 (ASC)
                     Comparator<Bean_friendslist> solt_Name = new Comparator<Bean_friendslist>() {
                         @Override
                         public int compare(Bean_friendslist o1, Bean_friendslist o2) {
@@ -596,7 +596,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     adapter.notifyDataSetChanged();
                     break;
 
-                case 2131231020: // 최신순 (DESC)
+                case 2131231022: // 최신순 (DESC)
                     Comparator<Bean_friendslist> solt_new = new Comparator<Bean_friendslist>() {
                         @Override
                         public int compare(Bean_friendslist o1, Bean_friendslist o2) {
@@ -607,7 +607,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     adapter.notifyDataSetChanged() ;
                     break;
 
-                case 2131231021: // 태그순 (ASC)
+                case 2131231023: // 태그순 (ASC)
                     Comparator<Bean_friendslist> solt_Tag = new Comparator<Bean_friendslist>() {
                         @Override
                         public int compare(Bean_friendslist o1, Bean_friendslist o2) {

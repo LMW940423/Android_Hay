@@ -49,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
     Timestamp setDeleteDate;
     Timestamp setInsertDate;
     String loginid,loginpw;
+    String findID;
 
 
     @Override
@@ -57,12 +58,10 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
 
+
         edtIP = findViewById(R.id.edt_ip);
         macIP = edtIP.getText().toString();
         Log.v(TAG, "macIP : " + macIP);
-
-
-
 
         btn_login = findViewById(R.id.login_btn_login);
 
@@ -80,6 +79,11 @@ public class LoginActivity extends AppCompatActivity {
         tv_findid.setOnClickListener(onClickListener);
         tv_findpw.setOnClickListener(onClickListener);
 
+        Intent intent1 = getIntent();
+        findID = intent1.getStringExtra("id_result");
+        if (findID!=null){
+            et_id.setText(findID);
+        }
 
         ////////////////////////////////////////////////////////////////////////
         //자동로그인 / 자동로그인이 되어있을때                                         //
@@ -202,9 +206,9 @@ public class LoginActivity extends AppCompatActivity {
                 // 비번 찾기로 이동 //
                 case R.id.login_tv_findpw :
                     intent = new Intent(LoginActivity.this, FindPWActivity.class);
+                    intent.putExtra("macIP", tempIP);
                     startActivity(intent);
                     break;
-
 
 
 

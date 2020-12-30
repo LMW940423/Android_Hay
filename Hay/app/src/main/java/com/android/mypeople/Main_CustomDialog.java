@@ -91,6 +91,27 @@ public class Main_CustomDialog extends AppCompatActivity{
         Tag4 = intent.getStringExtra("Tag4");
         Tag5 = intent.getStringExtra("Tag5");
 
+        Log.v(TAG, "uSeqno : " + uSeqno);
+        Log.v(TAG, "fSeqno : " + fSeqno);
+        Log.v(TAG, "fName : " + fName);
+        Log.v(TAG, "fTel : " + fTel);
+        Log.v(TAG, "fRelation : " + fRelation);
+        Log.v(TAG, "fImage : " + fImage);
+        Log.v(TAG, "fImageReal : " + fImageReal);
+        Log.v(TAG, "fTag1 : " + fTag1);
+        Log.v(TAG, "fTag2 : " + fTag2);
+        Log.v(TAG, "fTag3 : " + fTag3);
+        Log.v(TAG, "fTag4 : " + fTag4);
+        Log.v(TAG, "fTag5 : " + fTag5);
+        Log.v(TAG, "fComment : " + fComment);
+        Log.v(TAG, "fAddress : " + fAddress);
+        Log.v(TAG, "fEmail : " + fEmail);
+        Log.v(TAG, "Tag1 : " + Tag1);
+        Log.v(TAG, "Tag2 : " + Tag2);
+        Log.v(TAG, "Tag3 : " + Tag3);
+        Log.v(TAG, "Tag4 : " + Tag4);
+        Log.v(TAG, "Tag5 : " + Tag5);
+
         tv_Name = findViewById(R.id.main_Dialog_Tv_Name);
         tv_Call = findViewById(R.id.main_Dialog_Tv_Call);
         tv_Delete = findViewById(R.id.main_Dialog_Tv_Delete);
