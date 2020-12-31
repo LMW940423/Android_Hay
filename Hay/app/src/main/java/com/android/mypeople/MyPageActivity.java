@@ -62,6 +62,7 @@ public class MyPageActivity extends AppCompatActivity {
 //        ipurl = "http://192.168.2.3";
 
         ipurl = intent.getStringExtra("macIP");
+        Log.v("여기","MypageActivity MacIP : "+ipurl);
 
         urlAddr = "http://" + ipurl+ ":8080/mypeople/mypage.jsp?";
 
@@ -159,7 +160,7 @@ public class MyPageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MyPage_Password.class);
-                intent.putExtra("seq",seq);
+                intent.putExtra("uSeqno",seq);
                 intent.putExtra("pw",update_pw);
                 intent.putExtra("ipurl",ipurl);
                 startActivity(intent);
@@ -171,6 +172,9 @@ public class MyPageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra("macIP", ipurl);
+                intent.putExtra("uSeqno", seq);
+                intent.putExtra("action", "Show_List");
                 startActivity(intent);
             }
         });
@@ -198,8 +202,10 @@ public class MyPageActivity extends AppCompatActivity {
     }
 
     private void connectGetData(){
+        Log.v("여기","getdata"+seq);
         try {
             urlAddr = urlAddr+"seq="+seq;
+            Log.v("여기","getdata"+urlAddr);
             myPageNetworkTask myPageNetworkTask = new myPageNetworkTask(MyPageActivity.this, urlAddr);
             Object obj = myPageNetworkTask.execute().get();
             bean_user = (Bean_user) obj;
