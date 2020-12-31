@@ -79,6 +79,10 @@ public class DetailViewActivity extends AppCompatActivity {
     int t1 = 0, t2 = 0 ,t3 = 0, t4 = 0, t5 = 0 ;
     int limitT1 = 0, limitT2 = 0, limitT3 = 0, limitT4 = 0, limitT5 = 0;
 
+    String Etag1, Etag2, Etag3, Etag4, Etag5;
+    Bean_tag bean_tag=null;
+    String urlAddr = null;
+
 
     ////////////////////////////////////////////////////
     // Date 2020.12.28 - 태현
@@ -691,7 +695,7 @@ public class DetailViewActivity extends AppCompatActivity {
                         tag1.setImageResource(R.drawable.firstblack);
                         //DB에 보낼값.
                         t1 = 1;
-//                        Toast.makeText(DetailViewActivity.this,Tag1,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DetailViewActivity.this,Etag1,Toast.LENGTH_SHORT).show();
 
                     }else if(limitT1 == 1) {
                         limit--;
@@ -710,7 +714,7 @@ public class DetailViewActivity extends AppCompatActivity {
                         tag2.setImageResource(R.drawable.secondblack);
                         //DB에 보낼값.
                         t2 = 1;
-//                        Toast.makeText(DetailViewActivity.this,Tag2,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DetailViewActivity.this,Etag2,Toast.LENGTH_SHORT).show();
 
                     }else if(limitT2 == 1){
                         limit--;
@@ -730,7 +734,7 @@ public class DetailViewActivity extends AppCompatActivity {
                         //DB에 보낼값.
                         t3 = 1 ;
 
-//                        Toast.makeText(DetailViewActivity.this,Tag3,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DetailViewActivity.this,Etag3,Toast.LENGTH_SHORT).show();
 
                     }else if(limitT3 == 1){
                         limit--;
@@ -749,7 +753,7 @@ public class DetailViewActivity extends AppCompatActivity {
                         tag4.setImageResource(R.drawable.fourthblack);
                         //DB에 보낼값.
                         t4 = 1;
-//                        Toast.makeText(DetailViewActivity.this,Tag4,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DetailViewActivity.this,Etag4,Toast.LENGTH_SHORT).show();
 
                     }else if(limitT4 == 1){
                         limit--;
@@ -767,7 +771,7 @@ public class DetailViewActivity extends AppCompatActivity {
                         tag5.setImageResource(R.drawable.fifthblack);
                         //DB에 보낼값.
                         t5 = 1;
-//                        Toast.makeText(DetailViewActivity.this,Tag5,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DetailViewActivity.this,Etag5,Toast.LENGTH_SHORT).show();
 
                     }else if(limitT5 == 1){
                         limit--;
@@ -807,6 +811,44 @@ public class DetailViewActivity extends AppCompatActivity {
         }
 
         return result;
+    }
+
+    ////////////////////////////////////
+    // 태그 눌렀을때 태그값 토스트          //
+    ///////////////////////////////////
+    @Override
+    protected void onResume() {
+        super.onResume();
+        connectGetData();
+    }
+    private void connectGetData(){
+
+        try {
+            urlAddr = "http://"+macIP+":8080/mypeople/tagActivitySelect.jsp?";
+            urlAddr = urlAddr+"seq="+userseq;
+            TAGNetworkTask tagNetworkTask = new TAGNetworkTask(DetailViewActivity.this, urlAddr);
+            Object obj = tagNetworkTask.execute().get();
+            bean_tag = (Bean_tag) obj;
+
+            Etag1 = bean_tag.getTag1();
+            Etag2 = bean_tag.getTag2();
+            Etag3 = bean_tag.getTag3();
+            Etag4 = bean_tag.getTag4();
+            Etag5 = bean_tag.getTag5();
+
+
+            if(bean_tag.getTag1().equals("no")) Etag1 ="";
+            if(bean_tag.getTag2().equals("no")) Etag2 ="";
+            if(bean_tag.getTag3().equals("no")) Etag3 ="";
+            if(bean_tag.getTag4().equals("no")) Etag4 ="";
+            if(bean_tag.getTag5().equals("no")) Etag5 ="";
+
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
 }//--END

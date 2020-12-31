@@ -63,6 +63,7 @@ public class AddFriendsActivity extends AppCompatActivity {
     String sname, stel, semail, srelation, saddress, scomment, macIP;
     int userseq = 0;
 
+
     InputMethodManager inputMethodManager ;
     Intent intent;
 
@@ -77,7 +78,9 @@ public class AddFriendsActivity extends AppCompatActivity {
     int t1 = 0, t2 = 0 ,t3 = 0, t4 = 0, t5 = 0 ;
     int limitT1 = 0, limitT2 = 0, limitT3 = 0, limitT4 = 0, limitT5 = 0;
 
-
+    String Etag1, Etag2, Etag3, Etag4, Etag5;
+    Bean_tag bean_tag=null;
+    String urlAddr = null;
     ////////////////////////////////////////////////////
     // Date 2020.12.27 - 태현
     ////////////////////////////////
@@ -610,7 +613,7 @@ public class AddFriendsActivity extends AppCompatActivity {
                         tag1.setImageResource(R.drawable.firstblack);
                         //DB에 보낼값.
                         t1 = 1;
-                        Toast.makeText(AddFriendsActivity.this,"친구",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddFriendsActivity.this,Etag1,Toast.LENGTH_SHORT).show();
 
                     }else if(limitT1 == 1) {
                         limit--;
@@ -627,7 +630,7 @@ public class AddFriendsActivity extends AppCompatActivity {
                         limit++;
                         limitT2++;
                         tag2.setImageResource(R.drawable.secondblack);
-                        Toast.makeText(AddFriendsActivity.this,"가족",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddFriendsActivity.this,Etag2,Toast.LENGTH_SHORT).show();
                         //DB에 보낼값.
                         t2 = 1;
 
@@ -647,7 +650,7 @@ public class AddFriendsActivity extends AppCompatActivity {
                         limit++;
                         limitT3++;
                         tag3.setImageResource(R.drawable.thirdblack);
-                        Toast.makeText(AddFriendsActivity.this,"계모임",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddFriendsActivity.this,Etag3,Toast.LENGTH_SHORT).show();
                         //DB에 보낼값.
                         t3 = 1 ;
 
@@ -667,7 +670,7 @@ public class AddFriendsActivity extends AppCompatActivity {
                         limit++;
                         limitT4++;
                         tag4.setImageResource(R.drawable.fourthblack);
-                        Toast.makeText(AddFriendsActivity.this,"조기축구",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddFriendsActivity.this,Etag4,Toast.LENGTH_SHORT).show();
                         //DB에 보낼값.
                         t4 = 1;
 
@@ -686,7 +689,7 @@ public class AddFriendsActivity extends AppCompatActivity {
                         limit++;
                         limitT5++;
                         tag5.setImageResource(R.drawable.fifthblack);
-                        Toast.makeText(AddFriendsActivity.this,"거래",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddFriendsActivity.this,Etag5,Toast.LENGTH_SHORT).show();
                         //DB에 보낼값.
                         t5 = 1;
 
@@ -723,6 +726,45 @@ public class AddFriendsActivity extends AppCompatActivity {
         }
 
         return result;
+    }
+
+
+    ////////////////////////////////////
+    // 태그 눌렀을때 태그값 토스트          //
+    ///////////////////////////////////
+    @Override
+    protected void onResume() {
+        super.onResume();
+        connectGetData();
+    }
+    private void connectGetData(){
+
+        try {
+            urlAddr = "http://"+macIP+":8080/mypeople/tagActivitySelect.jsp?";
+            urlAddr = urlAddr+"seq="+userseq;
+            TAGNetworkTask tagNetworkTask = new TAGNetworkTask(AddFriendsActivity.this, urlAddr);
+            Object obj = tagNetworkTask.execute().get();
+            bean_tag = (Bean_tag) obj;
+
+            Etag1 = bean_tag.getTag1();
+            Etag2 = bean_tag.getTag2();
+            Etag3 = bean_tag.getTag3();
+            Etag4 = bean_tag.getTag4();
+            Etag5 = bean_tag.getTag5();
+
+
+            if(bean_tag.getTag1().equals("no")) Etag1 ="";
+            if(bean_tag.getTag2().equals("no")) Etag2 ="";
+            if(bean_tag.getTag3().equals("no")) Etag3 ="";
+            if(bean_tag.getTag4().equals("no")) Etag4 ="";
+            if(bean_tag.getTag5().equals("no")) Etag5 ="";
+
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
 }///----END
