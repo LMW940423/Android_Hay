@@ -33,6 +33,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     ArrayList<Bean_friendslist> unFilteredlist = null;
     ArrayList<Bean_friendslist> filteredList = null;
     Context context;
+    String macIP = null;
 
 
 
@@ -152,11 +153,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     }
 
     // 메인 액티비티에서 받은 myDataset을 가져오
-    public RecyclerAdapter(MainActivity mainActivity, int member, ArrayList<Bean_friendslist> myDataset, Context context) {
+    public RecyclerAdapter(MainActivity mainActivity, int member, ArrayList<Bean_friendslist> myDataset, Context context, String macIp) {
         mDataset = myDataset;
         this.filteredList = myDataset;
         this.unFilteredlist = myDataset;
         this.context = context;
+        this.macIP = macIp;
         Log.v(TAG2, "RecyclerAdapter1");
 //
     }
@@ -443,7 +445,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         }
 
         //2020.12.31. 태현. / 민우
-        Glide.with(context).load("http://192.168.0.80:8080/mypeople/"+ mDataset.get(position).getfImage()).into(holder.photo);
+        Glide.with(context).load("http://" + macIP + ":8080/mypeople/"+ mDataset.get(position).getfImage()).into(holder.photo);
         holder.name.setText(mDataset.get(position).getfName());
         holder.relation.setText(mDataset.get(position).getfRelation());
         holder.comment.setText(mDataset.get(position).getfComment());
