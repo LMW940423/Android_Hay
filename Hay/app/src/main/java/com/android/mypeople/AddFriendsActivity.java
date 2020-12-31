@@ -78,6 +78,7 @@ public class AddFriendsActivity extends AppCompatActivity {
     int t1 = 0, t2 = 0 ,t3 = 0, t4 = 0, t5 = 0 ;
     int limitT1 = 0, limitT2 = 0, limitT3 = 0, limitT4 = 0, limitT5 = 0;
 
+    //TAG이름값 -2020.12.31. -영재
     String Etag1, Etag2, Etag3, Etag4, Etag5;
     Bean_tag bean_tag=null;
     String urlAddr = null;

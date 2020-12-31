@@ -70,7 +70,6 @@ public class DetailViewActivity extends AppCompatActivity {
     LinearLayout ll_hide;
     EditText userName, userTel, userEmail, relation, address, comment;
     ImageView  tag1, tag2, tag3, tag4, tag5;
-    String Tag1, Tag2, Tag3, Tag4, Tag5; //이름 값 받아올곳.
     Button btnEnroll, btnCancel;
     TextView textView_match;
 
@@ -205,13 +204,6 @@ public class DetailViewActivity extends AppCompatActivity {
         t3 = intent.getIntExtra("fTag3",0);
         t4 = intent.getIntExtra("fTag4",0);
         t5 = intent.getIntExtra("fTag5",0);
-
-//        //12.30 태현 Tag 이름 값들 받아오기
-//        Tag1 = intent.getStringExtra("Tag1");
-//        Tag2 = intent.getStringExtra("Tag2");
-//        Tag3 = intent.getStringExtra("Tag3");
-//        Tag4 = intent.getStringExtra("Tag4");
-//        Tag5 = intent.getStringExtra("Tag5");
 
         //바로 setText로 띄우기
 

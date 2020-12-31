@@ -2,6 +2,7 @@ package com.android.mypeople;
 
 import android.app.ListActivity;
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -149,10 +152,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     }
 
     // 메인 액티비티에서 받은 myDataset을 가져오
-    public RecyclerAdapter(MainActivity mainActivity, int member, ArrayList<Bean_friendslist> myDataset) {
+    public RecyclerAdapter(MainActivity mainActivity, int member, ArrayList<Bean_friendslist> myDataset, Context context) {
         mDataset = myDataset;
         this.filteredList = myDataset;
         this.unFilteredlist = myDataset;
+        this.context = context;
         Log.v(TAG2, "RecyclerAdapter1");
 //
     }
@@ -437,13 +441,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
                 }
                 break;
         }
-        Log.v("Recycler", "Temp end: " + temp);
 
-        holder.photo.setImageResource(R.drawable.testimg);
+        //2020.12.31. 태현. / 민우
+        Glide.with(context).load("http://192.168.0.80:8080/mypeople/"+ mDataset.get(position).getfImage()).into(holder.photo);
         holder.name.setText(mDataset.get(position).getfName());
         holder.relation.setText(mDataset.get(position).getfRelation());
         holder.comment.setText(mDataset.get(position).getfComment());
-
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -457,8 +460,5 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
         return mDataset.size();
     }
-
-
-
 
 }

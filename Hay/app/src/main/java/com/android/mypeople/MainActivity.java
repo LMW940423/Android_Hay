@@ -205,7 +205,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         listView.setHasFixedSize(true);
 
         // Context는 Activity
-        adapter = new RecyclerAdapter(MainActivity.this, R.layout.activity_main, data);
+        adapter = new RecyclerAdapter(MainActivity.this, R.layout.activity_main, data, MainActivity.this);
         listView.setAdapter(adapter);
 
         // 레이아웃 매니저 만들기
@@ -412,14 +412,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             ListNetworkTask listNetworkTask= new ListNetworkTask(MainActivity.this, urlAddr, where);
 
 
-                SelectTagNameTask selectTagNameTask = new SelectTagNameTask(MainActivity.this, urlAddr2, "select");
-                Object obj1 = selectTagNameTask.execute().get();
-                tags = (ArrayList<Bean_tag>) obj1;
-                tagName[1] = tags.get(0).getTag1();
-                tagName[2] = tags.get(0).getTag2();
-                tagName[3] = tags.get(0).getTag3();
-                tagName[4] = tags.get(0).getTag4();
-                tagName[5] = tags.get(0).getTag5();
+            SelectTagNameTask selectTagNameTask = new SelectTagNameTask(MainActivity.this, urlAddr2, "select");
+            Object obj1 = selectTagNameTask.execute().get();
+            tags = (ArrayList<Bean_tag>) obj1;
+            tagName[1] = tags.get(0).getTag1();
+            tagName[2] = tags.get(0).getTag2();
+            tagName[3] = tags.get(0).getTag3();
+            tagName[4] = tags.get(0).getTag4();
+            tagName[5] = tags.get(0).getTag5();
 
 
             ///////////////////////////////////////////////////////////////////////////////////////
@@ -428,7 +428,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
             Log.v(TAG, "data.size() : " + data.size());
 
-            adapter = new RecyclerAdapter(MainActivity.this, R.layout.main_recycler_items, data);
+            adapter = new RecyclerAdapter(MainActivity.this, R.layout.main_recycler_items, data, MainActivity.this);
             listView.setAdapter(adapter);
 
             // 리스트 개수 파악
@@ -444,7 +444,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 Log.v(TAG, "dataSize = " + dataSize);
                 tv_Count.setText("검색결과 : " + dataSize + "명");
             }
-        beanList = data;
+            beanList = data;
 
         }catch (Exception e){
             e.printStackTrace();

@@ -92,6 +92,11 @@ public class LoginActivity extends AppCompatActivity {
         ////////////////////////////////////////////////////////////////////////
         SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
 
+        SharedPreferences.Editor autoLogin = auto.edit();
+
+        autoLogin.clear();
+        autoLogin.commit();
+
 
         loginid = auto.getString("inputId",null);
         loginpw = auto.getString("inputPw",null);
@@ -117,7 +122,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
-            /////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////
 
 
         //키보드 화면 터치시 숨기기위해 선언.
@@ -193,7 +198,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-                    // 아이디 찾기로 이동 //
+                // 아이디 찾기로 이동 //
                 case R.id.login_tv_findid :
                     intent = new Intent(LoginActivity.this, FindIDActivity.class);
                     intent.putExtra("macIP", tempIP);
@@ -212,10 +217,10 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-                 // 회원가입으로 이동 //
+                // 회원가입으로 이동 //
                 case R.id.login_tv_join :
                     intent = new Intent(LoginActivity.this, JoinUsActivity.class);
-                   intent.putExtra("macIP", tempIP);  // IP주소를 보내줌.
+                    intent.putExtra("macIP", tempIP);  // IP주소를 보내줌.
                     Log.v(TAG, "macIP : " + tempIP);
                     startActivity(intent);
                     break;
@@ -252,7 +257,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         }catch (Exception e){
-           e.printStackTrace();
+            e.printStackTrace();
         }
     }
 
