@@ -36,6 +36,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.blogspot.atifsoftwares.circularimageview.CircularImageView;
+import com.google.android.material.bottomappbar.BottomAppBar;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -66,6 +67,9 @@ public class AddFriendsActivity extends AppCompatActivity {
 
     InputMethodManager inputMethodManager ;
     Intent intent;
+
+    BottomAppBar bab;
+    boolean isCenter=true;
 
     LinearLayout ll_hide;
     EditText userName, userTel, userEmail, relation, address, comment;
@@ -174,6 +178,7 @@ public class AddFriendsActivity extends AppCompatActivity {
         btnCancel = findViewById(R.id.add_cancelBtn);
         textView_match = findViewById(R.id.add_textview_match);
 
+
         ////////////////////////////////////////////////////////////
         //                                                        //
         //                                                        //
@@ -257,6 +262,10 @@ public class AddFriendsActivity extends AppCompatActivity {
 
             }
         });
+
+        // 홈버튼 액션을 위한 선언
+        bab=findViewById(R.id.bab);
+
     }
 
     ////////////////////////////////////////////////////////////
@@ -316,9 +325,7 @@ public class AddFriendsActivity extends AppCompatActivity {
                     else if (scomment.equals("")){
                         scomment =  "null";
                     }
-                    else if (imageName.equals("")){
-                        imageName = "null";
-                    }
+
                     else {
                         String result = connectPictureCheck();
                         if(result.equals("1")){
@@ -767,6 +774,19 @@ public class AddFriendsActivity extends AppCompatActivity {
         }
 
     }
+    public void clickFab(View view) { // 하단 앱바 홈버튼 클릭시
+        isCenter= !isCenter;
+
+        if(isCenter) bab.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_CENTER);
+        else bab.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_END);
+
+        Intent intent = new Intent(AddFriendsActivity.this, MainActivity.class);
+        intent.putExtra("macIP", macIP);
+        intent.putExtra("uSeqno", userseq);
+        intent.putExtra("action", "Show_List");
+        startActivity(intent);
+    }
+
 
 }///----END
 

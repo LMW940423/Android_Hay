@@ -58,7 +58,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
 
-
         edtIP = findViewById(R.id.edt_ip);
         macIP = edtIP.getText().toString();
         Log.v(TAG, "macIP : " + macIP);
