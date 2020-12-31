@@ -40,6 +40,10 @@ public class JoinUsAddActivity extends AppCompatActivity {
     String nameVaildation = "^[a-zA-Zㄱ-ㅎ가-힣]+$";
     int count = 0;
     String urlAddrjoinTelCheck = null;
+    String urlAddrTag=null;
+    String urlAddrSeqSelect=null;
+    int seq = 0;
+    int userSeq=0;
 
 
 
@@ -57,6 +61,9 @@ public class JoinUsAddActivity extends AppCompatActivity {
 
         Log.v(TAG, "macIP : " + macIP);
         urlAddr = "http://" + macIP + ":8080/mypeople/join.jsp?"; // 물음표 뒤로 데이터를 붙여 날아감.
+
+        urlAddrSeqSelect = "http://" + macIP + ":8080/mypeople/seqSelect.jsp?";
+        urlAddrTag = "http://" + macIP + ":8080/mypeople/insertTag.jsp?";
 
 
         // 앞 페이지에서 받은 아이디(이메일) 띄워주기
@@ -148,9 +155,16 @@ public class JoinUsAddActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 if(et_pw.getText().toString().equals(et_pwcheck.getText().toString())){
                     tv_pwcheck.setText("일치합니다.");
+                    String strColor = "#077C0C";
+                    tv_pwcheck.setTextColor(Color.parseColor(strColor));
                 }
-                else
+                else {
+
                     tv_pwcheck.setText("일치하지 않습니다");
+                    String strColor = "#D34646";
+                    tv_pwcheck.setTextColor(Color.parseColor(strColor));
+                }
+
             }
         });
 
@@ -291,6 +305,9 @@ public class JoinUsAddActivity extends AppCompatActivity {
             urlAddr = urlAddr + "id=" + registId + "&pw=" + uPw + "&name=" + uName + "&tel=" + uTel;
             Log.v(TAG, "registId = " + registId);
             connectInsertData();
+            userSeq=connectSeqSelect();
+            connectInsertDataTag();
+
 
 //            // 실행이 안됨. 확인 필요
 //           Toast.makeText(JoinUsAddActivity.this, registId + "님 가입을 축하합니다!", Toast.LENGTH_LONG).show();
@@ -323,6 +340,33 @@ public class JoinUsAddActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+    }
+
+    private int connectSeqSelect(){
+        urlAddrSeqSelect=urlAddrSeqSelect+"userid="+registId;
+        try{
+            NetworkTask_jiseok insetnetworkTask = new NetworkTask_jiseok(JoinUsAddActivity.this, urlAddrSeqSelect,"selectSeq");
+            Object obj =  insetnetworkTask.execute().get();
+            seq = (int)obj;
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return seq;
+    }
+
+
+    private void connectInsertDataTag(){
+        urlAddrTag=urlAddrTag+"userseq="+userSeq;
+        try{
+            CUDNetworkTask insetnetworkTask = new CUDNetworkTask(JoinUsAddActivity.this, urlAddrTag);
+            insetnetworkTask.execute().get();
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
 

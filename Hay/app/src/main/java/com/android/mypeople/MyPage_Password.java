@@ -35,11 +35,13 @@ public class MyPage_Password extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_page__password);
         Intent intent = getIntent();
-        seq = intent.getIntExtra("seq",seq);
+        seq = intent.getIntExtra("uSeqno",0);
+        Log.v("오키오키","11-------------------------"+seq);
         update_pw = intent.getStringExtra("pw");
         ipurl = intent.getStringExtra("ipurl");
+        Log.v("여기","Mypage_Password MacIP : " +ipurl);
 
-        urlAddr = ipurl+":8080/mypeople/mypage_pwUpdate.jsp?";
+        urlAddr = "http://"+ipurl+":8080/mypeople/mypage_pwUpdate.jsp?";
 
 
 
@@ -64,6 +66,12 @@ public class MyPage_Password extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MyPage_Password.this,MyPageActivity.class);
+
+                intent.putExtra("macIP", ipurl);
+                intent.putExtra("action", "Show_List");
+                intent.putExtra("uSeqno", seq);
+
+
                 startActivity(intent);
             }
         });
@@ -95,13 +103,20 @@ public class MyPage_Password extends AppCompatActivity {
                     urlAddr1 = urlAddr+"nowpw="+update_pw+"&afterpw="+afterpw+"&seq="+seq;
                     String result = connectUpdateData();
                     if (result.equals("1")) {
+                        Log.v("tat","dd-----------------------------------------------------------------"+result);
                         String strColor = "#077C0C";
                         mypage_pwmessage3.setTextColor(Color.parseColor(strColor));
                         mypage_pwmessage3.setText("비밀번호 수정을 완료했습니다.");
                         mypage_pwmessage1.setText("");
                         mypage_pwmessage2.setText("");
+
+
                         Intent intent = new Intent(MyPage_Password.this,MyPageActivity.class);
+                        intent.putExtra("uSeqno", seq);
+                        intent.putExtra("macIP",ipurl);
                         startActivity(intent);
+
+
 
                     }else{
                         mypage_pwmessage3.setText("시스템에 문제가 발생했습니다. 관리자에게 문의부탁드립니다.");

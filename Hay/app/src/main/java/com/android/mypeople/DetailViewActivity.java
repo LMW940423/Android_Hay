@@ -37,6 +37,7 @@ import androidx.core.content.ContextCompat;
 
 import com.blogspot.atifsoftwares.circularimageview.CircularImageView;
 import com.bumptech.glide.Glide;
+import com.google.android.material.bottomappbar.BottomAppBar;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -66,6 +67,9 @@ public class DetailViewActivity extends AppCompatActivity {
 
     InputMethodManager inputMethodManager ;
     Intent intent;
+
+    BottomAppBar bab;
+    boolean isCenter=true;
 
     LinearLayout ll_hide;
     EditText userName, userTel, userEmail, relation, address, comment;
@@ -273,6 +277,9 @@ public class DetailViewActivity extends AppCompatActivity {
         btnPlus.setOnClickListener(onClickListener);
         btnEnroll.setOnClickListener(onClickListener);
         btnCancel.setOnClickListener(onClickListener);
+
+        // 홈버튼 액션을 위한 선언
+        bab=findViewById(R.id.bab);
 
 
         textView_match = findViewById(R.id.detail_textview_match);
@@ -841,6 +848,19 @@ public class DetailViewActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+    }
+
+    public void clickFab(View view) { // 하단 앱바 홈버튼 클릭시
+        isCenter= !isCenter;
+
+        if(isCenter) bab.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_CENTER);
+        else bab.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_END);
+
+        Intent intent = new Intent(DetailViewActivity.this, MainActivity.class);
+        intent.putExtra("macIP", macIP);
+        intent.putExtra("uSeqno", userseq);
+        intent.putExtra("action", "Show_List");
+        startActivity(intent);
     }
 
 }//--END

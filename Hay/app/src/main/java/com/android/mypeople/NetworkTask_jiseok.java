@@ -20,7 +20,7 @@ public class NetworkTask_jiseok extends AsyncTask<Integer,String,Object> {
     String mAddr = null;
     ProgressDialog progressDialog = null;
     String where = null;
-
+    int seq = 0;
     int findPwCount=0;
 
     //construct
@@ -70,6 +70,7 @@ public class NetworkTask_jiseok extends AsyncTask<Integer,String,Object> {
                 }
 
                 if(where.equals("findPwCount")) parser(stringBuffer.toString());
+                if(where.equals("selectSeq"))  parser2(stringBuffer.toString());
 
 
             }
@@ -88,6 +89,7 @@ public class NetworkTask_jiseok extends AsyncTask<Integer,String,Object> {
         }
 
         if(where.equals("findPwCount"))return findPwCount;
+        if(where.equals("selectSeq"))return seq;
 
 
         return null;
@@ -131,5 +133,24 @@ public class NetworkTask_jiseok extends AsyncTask<Integer,String,Object> {
         }
 
 
+    }
+    private void parser2(String s){
+        Log.v(TAG,"parser2()");
+        try {
+            JSONObject jsonObject = new JSONObject(s);
+            JSONArray jsonArray = new JSONArray(jsonObject.getString("user_info"));
+
+
+            for (int i=0; i<jsonArray.length(); i++){
+                JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
+                int userinfoSeq = jsonObject1.getInt("seq");
+                Log.v("여기","NetworkTask_jiseok_parserCount : "+userinfoSeq);
+                seq = userinfoSeq;
+
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

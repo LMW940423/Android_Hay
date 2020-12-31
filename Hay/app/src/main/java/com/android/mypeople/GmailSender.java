@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
+import java.util.Random;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -22,8 +23,8 @@ public class GmailSender extends javax.mail.Authenticator {
     private String user;
     private String password;
     private Session session;
-    private String emailCode;
-    private String emailCode2;
+    private String emailCode; // 변경된 비밀번호
+    private String emailCode2; // 이메일 인증코드
 
     public GmailSender(String user, String password) {
         Log.v("여기","GmailSenderClass1");
@@ -46,7 +47,7 @@ public class GmailSender extends javax.mail.Authenticator {
     public String getEmailCode() {
         Log.v("여기","GmailSenderClass2");
         return emailCode;
-    } //생성된 이메일 인증코드 반환
+    } //변경된 비밀번 반환
 
     public String getEmailCode2() {
         Log.v("여기","GmailSenderClass2");
@@ -56,13 +57,21 @@ public class GmailSender extends javax.mail.Authenticator {
 
 
     private String createEmailCode() {
-        //이메일 인증코드 생성
+        //변경된 비밀번호
         String[] str = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
         String newCode = new String();
         for (int x = 0; x < 8; x++) {
             int random = (int) (Math.random() * str.length);
             newCode += str[random];
         }
+        String [] str1 = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+        String [] str2 = {"!","@"};
+        Random random1 = new Random();
+
+        newCode = newCode+str1[random1.nextInt(str1.length)];
+        newCode = newCode+str2[random1.nextInt(str2.length)];
+
+
         return newCode;
     }
     private String createEmailCode2() {

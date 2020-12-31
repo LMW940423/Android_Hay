@@ -205,7 +205,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         listView.setHasFixedSize(true);
 
         // Context는 Activity
-        adapter = new RecyclerAdapter(MainActivity.this, R.layout.activity_main, data, MainActivity.this);
+        adapter = new RecyclerAdapter(MainActivity.this, R.layout.activity_main, data, MainActivity.this, macIP);
         listView.setAdapter(adapter);
 
         // 레이아웃 매니저 만들기
@@ -368,11 +368,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 intent.putExtra("fComment", data.get(position).getfComment());
                 intent.putExtra("fAddress", data.get(position).getfAddress());
                 intent.putExtra("fEmail", data.get(position).getfEmail());
-                intent.putExtra("Tag1", tags.get(position).getTag1());
-                intent.putExtra("Tag2", tags.get(position).getTag2());
-                intent.putExtra("Tag3", tags.get(position).getTag3());
-                intent.putExtra("Tag4", tags.get(position).getTag4());
-                intent.putExtra("Tag5", tags.get(position).getTag5());
+                intent.putExtra("Tag1", tags.get(0).getTag1());
+                intent.putExtra("Tag2", tags.get(0).getTag2());
+                intent.putExtra("Tag3", tags.get(0).getTag3());
+                intent.putExtra("Tag4", tags.get(0).getTag4());
+                intent.putExtra("Tag5", tags.get(0).getTag5());
 
                 Log.v(TAG,"macIP : " + macIP);
                 Log.v(TAG, "클릭한 사람 seqno : " + data.get(position).getfSeqno());
@@ -428,7 +428,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
             Log.v(TAG, "data.size() : " + data.size());
 
-            adapter = new RecyclerAdapter(MainActivity.this, R.layout.main_recycler_items, data, MainActivity.this);
+            adapter = new RecyclerAdapter(MainActivity.this, R.layout.main_recycler_items, data, MainActivity.this, macIP);
             listView.setAdapter(adapter);
 
             // 리스트 개수 파악
@@ -584,7 +584,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             Log.v(TAG, "버튼 클릭 : " + checkedId);
 
             switch (checkedId){
-                case 2131231021: // 가나다순 (ASC)
+                case 2131231025: // 가나다순 (ASC)
                     Comparator<Bean_friendslist> solt_Name = new Comparator<Bean_friendslist>() {
                         @Override
                         public int compare(Bean_friendslist o1, Bean_friendslist o2) {
@@ -596,7 +596,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     adapter.notifyDataSetChanged();
                     break;
 
-                case 2131231022: // 최신순 (DESC)
+                case 2131231026: // 최신순 (DESC)
                     Comparator<Bean_friendslist> solt_new = new Comparator<Bean_friendslist>() {
                         @Override
                         public int compare(Bean_friendslist o1, Bean_friendslist o2) {
@@ -607,7 +607,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     adapter.notifyDataSetChanged() ;
                     break;
 
-                case 2131231023: // 태그순 (ASC)
+                case 2131231027: // 태그순 (ASC)
                     Comparator<Bean_friendslist> solt_Tag = new Comparator<Bean_friendslist>() {
                         @Override
                         public int compare(Bean_friendslist o1, Bean_friendslist o2) {
