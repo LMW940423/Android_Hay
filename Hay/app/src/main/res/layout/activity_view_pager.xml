@@ -25,15 +25,15 @@
         android:orientation="vertical"
         android:layout_height="300dp">
 
-    <me.relex.circleindicator.CircleIndicator
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:id="@+id/indicator"
-        app:ci_drawable="@drawable/white_radius"
-        app:ci_height="7dp"
-        app:ci_width="7dp"
-        app:ci_margin="4dp">
-    </me.relex.circleindicator.CircleIndicator>
+        <me.relex.circleindicator.CircleIndicator
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:id="@+id/indicator"
+            app:ci_drawable="@drawable/white_radius"
+            app:ci_height="7dp"
+            app:ci_width="7dp"
+            app:ci_margin="4dp">
+        </me.relex.circleindicator.CircleIndicator>
 
         <Button
             android:id="@+id/start_btn"
@@ -48,6 +48,21 @@
             android:layout_margin="10dp"
 
             app:backgroundTint="#FFFFFF"></Button>
+
+        <LinearLayout
+            android:id="@+id/ll_button"
+            android:layout_width="match_parent"
+            android:background="#666"
+            android:padding="10dp"
+            android:layout_height="60dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="다시는 보지않기"
+                android:textColor="#fff"
+                android:layout_height="30dp">
+            </TextView>
+        </LinearLayout>
 
     </LinearLayout>
 
