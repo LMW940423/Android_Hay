@@ -65,7 +65,7 @@ public class GmailSender extends javax.mail.Authenticator {
             newCode += str[random];
         }
         String [] str1 = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
-        String [] str2 = {"!","@","#"};
+        String [] str2 = {"!","@"};
         Random random1 = new Random();
 
         newCode = newCode+str1[random1.nextInt(str1.length)];

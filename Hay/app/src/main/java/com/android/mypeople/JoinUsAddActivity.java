@@ -155,9 +155,16 @@ public class JoinUsAddActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 if(et_pw.getText().toString().equals(et_pwcheck.getText().toString())){
                     tv_pwcheck.setText("일치합니다.");
+                    String strColor = "#077C0C";
+                    tv_pwcheck.setTextColor(Color.parseColor(strColor));
                 }
-                else
+                else {
+
                     tv_pwcheck.setText("일치하지 않습니다");
+                    String strColor = "#D34646";
+                    tv_pwcheck.setTextColor(Color.parseColor(strColor));
+                }
+
             }
         });
 

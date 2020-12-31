@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.DialogPreference;
 import android.preference.Preference;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -70,7 +71,8 @@ public class TAGActivity extends AppCompatActivity {
                     if(Etag4.getText().toString().length()==0) tag4="no";
                     if(Etag5.getText().toString().length()==0) tag5="no";
 
-                    urlAddr1 = "http://192.168.219.100:8080/mypeople/tagActivityUpdate.jsp?tag1="+tag1+"&tag2="+tag2+"&tag3="+tag3+"&tag4="+tag4+"&tag5="+tag5+"&seq="+seq;
+                    urlAddr1 = "http://"+macIP+":8080/mypeople/tagActivityUpdate.jsp?tag1="+tag1+"&tag2="+tag2+"&tag3="+tag3+"&tag4="+tag4+"&tag5="+tag5+"&seq="+seq;
+                    Log.v("여기","urlTagupdate"+urlAddr1);
                     connectUpdateData();
 
                     new AlertDialog.Builder(TAGActivity.this)
@@ -80,6 +82,7 @@ public class TAGActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int which) {
                                     Intent intent = new Intent(TAGActivity.this,MainActivity.class);
                                     intent.putExtra("macIP",macIP);
+                                    intent.putExtra("uSeqno", seq);
                                     intent.putExtra("action","Show_List");
                                     startActivity(intent);
                                 }
@@ -89,6 +92,7 @@ public class TAGActivity extends AppCompatActivity {
                 case R.id.tag__cancel_cancelBtn:
                     Intent intent = new Intent(TAGActivity.this,MainActivity.class);
                     intent.putExtra("macIP",macIP);
+                    intent.putExtra("uSeqno", seq);
                     intent.putExtra("action","Show_List");
                     startActivity(intent);
                     break;
