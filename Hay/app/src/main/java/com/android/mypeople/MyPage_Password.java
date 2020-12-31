@@ -64,6 +64,8 @@ public class MyPage_Password extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MyPage_Password.this,MyPageActivity.class);
+                intent.putExtra("macIP", ipurl);
+                intent.putExtra("action", "Show_List");
                 startActivity(intent);
             }
         });
