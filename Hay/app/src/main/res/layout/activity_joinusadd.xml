@@ -87,6 +87,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="8글자이상, 특수문자와 대문자가 포함되어야 합니다."
+            android:textSize="12dp"
             android:textColor="@color/input_register"
             android:layout_marginLeft="10dp"
 
@@ -153,6 +154,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="가입되어 있는 번호는 사용하실 수 없습니다."
+            android:textSize="12dp"
             android:textColor="@color/input_register"
             android:layout_marginLeft="10dp"
             />

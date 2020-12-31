@@ -3,6 +3,7 @@ package com.android.mypeople;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -87,12 +88,21 @@ public class JoinUsActivity extends AppCompatActivity {
                         tv_idcheck.setText("이메일인증을 해주세요.");
                         Log.v(TAG, "sendEmail : " + sendMail.emailCode);
                     }else if(sendMail.emailCode.equals(editEmail.getText().toString())){
-                        intent = new Intent(JoinUsActivity.this, JoinUsAddActivity.class);
-                        // 입력받은 이메일 넘김.
-                        intent.putExtra("et_idsend", et_idsend);
-                        intent.putExtra("macIP", macIP);  // IP주소를 보내줌.
-                        Log.v(TAG, "macIP123 : " + macIP);
-                        startActivity(intent);
+
+                        new AlertDialog.Builder(JoinUsActivity.this)
+                                .setTitle("이메일인증이 완료 되었습니다.")
+                                .setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        intent = new Intent(JoinUsActivity.this, JoinUsAddActivity.class);
+                                        // 입력받은 이메일 넘김.
+                                        intent.putExtra("et_idsend", et_idsend);
+                                        intent.putExtra("macIP", macIP);  // IP주소를 보내줌.
+                                        Log.v(TAG, "macIP123 : " + macIP);
+                                        startActivity(intent);
+                                    }
+                                })
+                                .show();
                     }else {
                         tv_emailcheck.setText("인증에 실패하였습니다.");
                     }
@@ -128,6 +138,8 @@ public class JoinUsActivity extends AppCompatActivity {
 
                     } else {
                         tv_idcheck.setText("중복된 아이디 입니다.");
+                        String strColor = "#D34646";
+                        tv_idcheck.setTextColor(Color.parseColor(strColor));
                     }
                 }
 
