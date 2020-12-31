@@ -316,9 +316,6 @@ public class AddFriendsActivity extends AppCompatActivity {
                     else if (scomment.equals("")){
                         scomment =  "null";
                     }
-                    else if (imageName.equals("")){
-                        imageName = "null";
-                    }
                     else {
                         String result = connectPictureCheck();
                         if(result.equals("1")){
