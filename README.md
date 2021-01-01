@@ -6,7 +6,7 @@
 
 1. 클론한 DB를 본인 MySQL에 Import합니다.
 
-1-1. Schema Name : mypeople / tables : friendslist, tag, user
+1-1. Schema Name : mypeople / Tables : friendslist, tag, user
 
 2. 클론한 JSP폴더 안의 파일들을 본인의 Tomcat-webapps-ROOT경로로 들어가서 mypeople폴더를 생성 후 그 안에 옮깁니다.
 
