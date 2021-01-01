@@ -10,7 +10,9 @@
 
 3. 안드로이드 스튜디오를 실행시켜 클론받은 Android_Hay폴더 속에 있는 Hay폴더를 열어줍니다.
 
-4. layout 중 activity_login.xml를 열어 
+4.
+
+5. layout 중 activity_login.xml를 열어 
 
 <EditText
 
@@ -32,7 +34,7 @@
         
         />
         
-5. 구동시켜 확인해봅니다.
+6. 구동시켜 확인해봅니다.
 
 ----
 
