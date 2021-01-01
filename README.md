@@ -10,11 +10,13 @@
 
 2. 클론한 JSP폴더 안의 파일들을 본인의 Tomcat-webapps-ROOT경로로 들어가서 mypeople폴더를 생성 후 그 안에 옮깁니다.
 
-3. 안드로이드 스튜디오를 실행시켜 클론받은 Android_Hay폴더 속에 있는 Hay폴더를 열어줍니다
+3. 클론받은 Android_Hay폴더 속에 있는 Hay폴더를 본인 Android Studio 기본 설정 경로에 넣어줍니다.
 
-4. 태현형 여기에 적어주세요
+4. Android Studio를 실행한 후 기본 설정 경로에 넣은 Hay폴더를 엽니다.
 
-5. layout 중 activity_login.xml를 열어 
+5. 태현형 여기에 적어주세요
+
+6. layout 중 activity_login.xml를 열어 
 
 <EditText
 
@@ -36,7 +38,7 @@
         
         />
         
-6. 구동시켜 확인해봅니다. (에뮬레이터 언어를 한국어를 1순위로 바꿔주면 더 다양한 기능이 구현됩니다)
+7. 구동시켜 확인해봅니다. (에뮬레이터 언어를 한국어를 1순위로 바꿔주면 더 다양한 기능이 구현됩니다)
 
 ----
 
