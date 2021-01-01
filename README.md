@@ -53,7 +53,7 @@
 
 Android_MyPeople
 
--수정 2020.12.23 01:14-
+-수정 2020.12.31 01:14-
 
 필독
 
@@ -88,18 +88,4 @@ Android_MyPeople
 8-2.항상 자기가 선언한 id가 맞는지 확인하고 사용하시길..
 
 9.화이팅
-
-논의 필요 사항
-
-1.DB만들어야 합니다!!!!!(아주 중요!!!!) => 프레임 대거 변화 예정..
-
-Activity 설명
-
-1.DetailActivity => 리스트에서 클릭했을 때 상세보기 뷰
-
-2.AddActivity => 주소록 추가하는 뷰
-
-3.ExplanationActivity => 어플 설명 슬라이드 뷰
-
-4.TAGActivity => 태그 관리하는 뷰
 
