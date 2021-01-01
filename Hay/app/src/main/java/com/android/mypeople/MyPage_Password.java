@@ -16,6 +16,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.material.bottomappbar.BottomAppBar;
+
 public class MyPage_Password extends AppCompatActivity {
 
     int seq;
@@ -27,6 +29,10 @@ public class MyPage_Password extends AppCompatActivity {
     LinearLayout ll_hide;
     InputMethodManager inputMethodManager ;
     String pwVaildation = "^.*(?=^.{8,20}$)(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$";
+
+    //앱바
+    BottomAppBar bab;
+    boolean isCenter=true;
 
 
 
@@ -56,6 +62,9 @@ public class MyPage_Password extends AppCompatActivity {
         mypage_pwmessage3 = findViewById(R.id.mypage_pwmessage3);
 
         mypage_updatebtn = findViewById(R.id.mypage_updatebtn);
+
+        // 홈버튼 액션을 위한 선언
+        bab=findViewById(R.id.bab);
 
         mypage_nowPw.setFilters(new InputFilter[] {new InputFilter.LengthFilter(20)});
         mypage_afterPw.setFilters(new InputFilter[] {new InputFilter.LengthFilter(20)});
@@ -235,4 +244,19 @@ public class MyPage_Password extends AppCompatActivity {
             e.printStackTrace();
         }return result;
     }
+
+    /////////////////앱바//////////////////////
+    public void clickFab(View view) { // 하단 앱바 홈버튼 클릭시
+        isCenter= !isCenter;
+
+        if(isCenter) bab.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_CENTER);
+        else bab.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_END);
+
+        Intent intent = new Intent(MyPage_Password.this, MainActivity.class);
+        intent.putExtra("macIP", ipurl);
+        intent.putExtra("uSeqno", seq);
+        intent.putExtra("action", "Show_List");
+        startActivity(intent);
+    }
+    /////////////////앱바//////////////////////
 }
