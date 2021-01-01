@@ -512,8 +512,6 @@ public class AddFriendsActivity extends AppCompatActivity {
                         }
                     }
                     bitMap(data);
-
-
                 }catch (Exception e){
                     Log.v(TAG,"Camera12332123");
                     e.printStackTrace();
@@ -527,7 +525,7 @@ public class AddFriendsActivity extends AppCompatActivity {
 
         img_path = getImagePathToUri(data.getData()); //이미지의 URI를 얻어 경로값으로 반환.
         Toast.makeText(getBaseContext(), "img_path : " + img_path, Toast.LENGTH_SHORT).show();
-        Log.v("test", String.valueOf(data.getData()));
+        Log.v(TAG, String.valueOf(data.getData()));
         //이미지를 비트맵형식으로 반환
         image_bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
 
@@ -546,7 +544,7 @@ public class AddFriendsActivity extends AppCompatActivity {
     }
 
     public String getImagePathToUri(Uri data) {
-        //사용자가 선택한 이미지의 정보를 받아옴
+       //사용자가 선택한 이미지의 정보를 받아옴
         String[] proj = {MediaStore.Images.Media.DATA};
         Cursor cursor = managedQuery(data, proj, null, null, null);
         int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
@@ -560,6 +558,7 @@ public class AddFriendsActivity extends AppCompatActivity {
 
         f_ext = imgPath.substring(imgPath.length()-3, imgPath.length());
         this.imageName = imgName;
+
 
         return imgPath;
     }//end of getImagePathToUri()
