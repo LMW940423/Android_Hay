@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MyPageActivity">
+    tools:context=".HyunA.Activity.MyPageActivity">
 
     <LinearLayout
         android:id="@+id/detail_ll_hide"

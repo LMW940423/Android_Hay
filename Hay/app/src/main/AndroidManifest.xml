@@ -17,29 +17,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
-        <activity android:name=".ViewPagerActivity" />
-        <activity android:name=".MyPage_Password"
+        <activity android:name=".HyunA.Activity.ViewPagerActivity" />
+        <activity android:name=".HyunA.Activity.MyPage_Password"
             android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".UserDeleteActivity" />
-        <activity android:name=".TAGActivity"
+        <activity android:name=".HyunA.Activity.UserDeleteActivity" />
+        <activity android:name=".jiseok.Activity.TAGActivity"
             android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".FindPWActivity" />
-        <activity android:name=".FindIDActivity" />
-        <activity android:name=".AddFriendsActivity"
+        <activity android:name=".jiseok.Activity.FindPWActivity" />
+        <activity android:name=".youngjae.Activity.FindIDActivity" />
+        <activity android:name=".Taehyun.Activity.AddFriendsActivity"
             android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".DetailViewActivity"
+        <activity android:name=".Taehyun.Activity.DetailViewActivity"
             android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".JoinUsActivity" />
-        <activity android:name=".MyPageActivity"
+        <activity android:name=".youngjae.Activity.LoginActivity" />
+        <activity android:name=".jiseok.Activity.JoinUsActivity" />
+        <activity android:name=".HyunA.Activity.MyPageActivity"
             android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".ExplanationActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".JoinUsAddActivity" />
+        <activity android:name=".Minwoo.Activity.MainActivity" />
+        <activity android:name=".youngjae.Activity.JoinUsAddActivity" />
         <activity
-            android:name=".Main_CustomDialog"
+            android:name=".Minwoo.Activity.Main_CustomDialog"
             android:theme="@style/Theme.MyDialog" />
-        <activity android:name=".IntroActivity">
+        <activity android:name=".HyunA.Activity.IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
