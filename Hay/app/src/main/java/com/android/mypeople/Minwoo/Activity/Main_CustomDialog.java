@@ -195,7 +195,7 @@ public class Main_CustomDialog extends AppCompatActivity{
         }
     };
 
-    private void connectGetData(){
+    private void connectGetData(){ // 해당 연락처 삭제
         try {
             ListNetworkTask listNetworkTask= new ListNetworkTask(Main_CustomDialog.this, urlAddr, where);
             Object obj = listNetworkTask.execute().get();

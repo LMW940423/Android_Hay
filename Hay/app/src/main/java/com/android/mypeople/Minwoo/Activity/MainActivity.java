@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         // 인텐트 받은 액션여부로 나누어 urlAddr 설정하기
         action = intent.getStringExtra("action");
 
-        switch (action){
+        switch (action){ // intent로 받은 action값이 존재할 경우 값마다 다른 DB Action
             case "Show_List":
                 where = "select"; // 리스트 불러오는 처음은 select
                 urlAddr = "http://" + macIP + ":8080/mypeople/friendslist_Select_All.jsp?user_uSeqno=" + userSeqno;
@@ -212,31 +212,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         layoutManager = new LinearLayoutManager(this);
         listView.setLayoutManager(layoutManager);
 
-
-
-
-
-
-
-//        searchText.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-////                adapter.getFilter().filter(s);
-////                String text = searchText.getText().toString();
-////                adapter.fillter(text);
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//            }
-//        });
-
         // 툴바 생성
         Toolbar toolbar = (Toolbar)findViewById(R.id.main_toolbar); // 상단 툴바
         toolbar.setTitle(R.string.app_name);
@@ -297,20 +272,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
-
-
     @Override
     protected void onResume() {
         super.onResume();
         Bean_friendslist bean_friendslist = new Bean_friendslist();
         Log.v(TAG, "onResume urlAddr : " + urlAddr);
         Intent intent = new Intent();
-        // 검색 기능 TEST
 
         // 리스트를 생성한다.
         list = new ArrayList<Bean_friendslist>();
         list = connectGetData(); // db를 통해 받은 데이터를 담는다.
 
+        // -----------------검색-------------------
         if(list.size() == 0){ // 만약 검색결과가 없다면
 
         }else{ // 검색 결과가 있다면
@@ -342,11 +315,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             // 리스트에 검색될 데이터(단어)를 추가한다.
             searchText.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, deleteDuplData)); // 중복이 제거된 배열값을 넣어서 리스트를 띄운다.
         }
-
-
+        // ------------------------------------------
 
         // 리스트 클릭 이벤트
-
         adapter.setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
@@ -397,22 +368,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
-    private ArrayList<Bean_friendslist> connectGetData(){
+    private ArrayList<Bean_friendslist> connectGetData(){ // friendslist 데이터를 출력해옴
         ArrayList<Bean_friendslist> beanList = new ArrayList<Bean_friendslist>();
         try {
-            ///////////////////////////////////////////////////////////////////////////////////////
-            // Date : 2020.12.25
-            //
-            // Description:
-            //  - NetworkTask의 생성자 추가 : where <- "select"
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////
-            getSearchText = searchText.getText().toString();
+            getSearchText = searchText.getText().toString(); // 검색한 내용
             Log.v(TAG, "connectGetData getSearchText : " + getSearchText);
-            ListNetworkTask listNetworkTask= new ListNetworkTask(MainActivity.this, urlAddr, where);
+            ListNetworkTask listNetworkTask= new ListNetworkTask(MainActivity.this, urlAddr, where); // 리스트를 불러오는 NetworkTask
 
-
-            SelectTagNameTask selectTagNameTask = new SelectTagNameTask(MainActivity.this, urlAddr2, "select");
+            SelectTagNameTask selectTagNameTask = new SelectTagNameTask(MainActivity.this, urlAddr2, "select"); // 태그명을 불러오는 NetworkTask
             Object obj1 = selectTagNameTask.execute().get();
             tags = (ArrayList<Bean_tag>) obj1;
             tagName[1] = tags.get(0).getTag1();
@@ -421,8 +384,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             tagName[4] = tags.get(0).getTag4();
             tagName[5] = tags.get(0).getTag5();
 
-
-            ///////////////////////////////////////////////////////////////////////////////////////
             Object obj = listNetworkTask.execute().get();
             data = (ArrayList<Bean_friendslist>) obj;
 
@@ -452,20 +413,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         return beanList;
     }
 
-//        AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
-//            Intent intent = null;
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                intent = new Intent(SelectAllActivity.this, UpdateActivity.class);
-//                intent.putExtra("code", members.get(i).getCode());
-//                intent.putExtra("name", members.get(i).getName());
-//                intent.putExtra("dept", members.get(i).getDept());
-//                intent.putExtra("phone", members.get(i).getPhone());
-//                intent.putExtra("macIP" , macIP);
-//                startActivity(intent);
-//            }
-//        };
-
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -480,15 +427,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
     };
 
-    ////////////////////////////////////////////////////////////
-    //                                                        //
-    //                                                        //
-    //                       구분용 주석                       //
-    //                                                        //
-    //                                                        //
-    ////////////////////////////////////////////////////////////
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) { // 툴바 햄버거 메뉴
+    public boolean onCreateOptionsMenu(Menu menu) { // 툴바 메뉴
 
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu_toolbar, menu);
@@ -505,14 +445,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 intent.putExtra("macIP", macIP);
                 startActivity(intent);
 
-                // 아이디값 넘기기?
                 break;
             case R.id.menu_ManageTag: // 태그수정
                 intent = new Intent(MainActivity.this, TAGActivity.class);
                 intent.putExtra("uSeqno", userSeqno);
                 intent.putExtra("macIP", macIP);
                 startActivity(intent);
-                // 아이디값 넘기기?
+
                 break;
             case R.id.menu_Logout: // 로그아웃 시 선택 가능
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -529,7 +468,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         autoLogin.clear();
                         autoLogin.commit();
                         startActivity(intent);
-                        // 아이디값 넘기기?
                     }
                 });
 
@@ -553,7 +491,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         startActivity(intent);
     }
 
-    public void hideKeyboard(View view) { // 레이아웃 클릭 시 키보드 내리기 (실패)
+    public void hideKeyboard(View view) { // 레이아웃 클릭 시 키보드 내리기
         view = getCurrentFocus();
         if(view != null){
             InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -578,10 +516,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
     };
 
+    // --------------------------------정렬------------------------------
     RadioGroup.OnCheckedChangeListener radioGroupButtonChangeListener = new RadioGroup.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(RadioGroup group, int checkedId) {
             Log.v(TAG, "버튼 클릭 : " + checkedId);
+
+            // 1. 정렬
+            // 2. 어댑터 갱신
 
             switch (checkedId){
                 case 2131231025: // 가나다순 (ASC)
@@ -592,7 +534,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         }
                     };
                     Collections.sort(data, solt_Name);
-
                     adapter.notifyDataSetChanged();
                     break;
 
@@ -607,49 +548,47 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     adapter.notifyDataSetChanged() ;
                     break;
 
-                case 2131231027: // 태그순 (ASC)
+                case 2131231027: // 태그순 (ASC) => tag1 > tag5 순으로
                     Comparator<Bean_friendslist> solt_Tag = new Comparator<Bean_friendslist>() {
                         @Override
                         public int compare(Bean_friendslist o1, Bean_friendslist o2) {
                             int ret = 0;
 
                             if(o1.getfTag1() < o2.getfTag1()){ // 처음 값 비교
-                                ret = -1;
-                            }else if(o1.getfTag1() == o2.getfTag1()){ // 같으면 다음값 비교
+                                ret = 1;
+                            }else if(o1.getfTag1() == o2.getfTag1()){ // 같으면 다음값 비교Log.v(TAG, "1이름 : " + o1.getfName());
                                 ret = o1.getfName().compareTo(o2.getfName()); // 1번째 이름 비교
                                 if(o1.getfTag2() < o2.getfTag2()){ // 두번째 값 비교
-                                    ret = -1;
+                                    ret = 1;
                                 }else if(o1.getfTag2() == o2.getfTag2()){ // 같으면 다음값
                                     ret = o1.getfName().compareTo(o2.getfName()); // 2번째 이름 비교
                                     if(o1.getfTag3() < o2.getfTag3()){ // 세번째 값 비교
-                                        ret = -1;
+                                        ret = 1;
                                     }else if(o1.getfTag3() == o2.getfTag3()){ // 같으면 다음값
                                         ret = o1.getfName().compareTo(o2.getfName()); // 3번째 이름 비교
                                         if(o1.getfTag4() < o2.getfTag4()){ // 네번째 값 비교
-                                            ret = -1;
+                                            ret = 1;
                                         }else if(o1.getfTag4() == o2.getfTag4()){ // 같으면 다음값
                                             ret = o1.getfName().compareTo(o2.getfName()); // 4번째 이름 비교
                                             if(o1.getfTag5() < o2.getfTag5()){ // 마지막 값 비교
-                                                ret = -1;
+                                                ret = 1;
                                             }else if(o1.getfTag5() == o2.getfTag5()){ //  같으면 다음값
                                                 ret = o1.getfName().compareTo(o2.getfName()); // 5번째 이름 비교
                                             }else{
-                                                ret = 1;
+                                                ret = -1;
                                             }
                                         }else{ // 전자가 작으면 앞으로
-                                            ret = 1;
+                                            ret = -1;
                                         }
                                     }else{ // 전자가 작으면 앞으로
-                                        ret = 1;
+                                        ret = -1;
                                     }
                                 }else{ // 전자가 작으면 앞으로
-                                    ret = 1;
+                                    ret = -1;
                                 }
                             }else{ // 전자가 작으면 앞으로
-                                ret = 1;
+                                ret = -1;
                             }
-                            Log.v(TAG, "o1.getfTag1 : " + o1.getfTag1());
-                            Log.v(TAG, "o2.getfTag2 : " + o2.getfTag2());
 
                             return ret;
                         }

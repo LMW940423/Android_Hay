@@ -30,65 +30,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     Context context;
     String macIP = null;
 
-
-
-
-//    @Override
-//    public Filter getFilter() {
-//        return new Filter() {
-//            @Override
-//            protected FilterResults performFiltering(CharSequence constraint) {
-//                FilterResults results = new FilterResults();
-//
-////                String charString = constraint.toString();
-////                if(constraint == null || constraint.length() == 0) {
-////                    Log.v(TAG2," results-1 : " + constraint);
-////                    mDataset = unFilteredlist;
-//////                    results.values = listViewItemList ;
-//////                    results.count = listViewItemList.size() ;
-////                    Log.v(TAG2," results0 : ");
-////                } else {
-////                    ArrayList<Bean_friendslist> filteringList = new ArrayList<>();
-////                    for(Bean_friendslist name : mDataset) {
-////                        Log.v(TAG2," results99 : " + constraint);
-////                        if(name.getfName().contains(charString)) {
-////                            filteringList.add(name);
-////                            Log.v(TAG2," results1 : " + name.getfName());
-////                        }
-////                    }
-////                    mDataset = filteringList;
-////                }
-////                FilterResults filterResults = new FilterResults();
-////                filterResults.values = mDataset;
-//
-//                if (constraint == null || constraint.length() == 0) {
-//                    results.values = mDataset;
-//                    results.count = mDataset.size();
-//                } else {
-//                    ArrayList<Bean_friendslist> itemList = new ArrayList<Bean_friendslist>();
-//
-//                    for (Bean_friendslist item : mDataset) {
-//                        if (item.getfName().contains(constraint.toString()) ||
-//                                item.getfComment().contains(constraint.toString())) {
-//                            itemList.add(item);
-//                        }
-//                    }
-//                    results.values = itemList;
-//                    results.count = itemList.size();
-//                }
-//                return results;
-//            }
-//            @Override
-//            protected void publishResults(CharSequence constraint, FilterResults results) {
-//                filteredList = (ArrayList<Bean_friendslist>) results.values;
-//                Log.v(TAG2," results2 : " + results);
-//                Log.v(TAG2," results3 : " + (ArrayList<Bean_friendslist>) results.values);
-//                notifyDataSetChanged();
-//            }
-//        };
-//    }
-
-
     //------------------Click Event------------------
     public interface OnItemClickListener{
         void onItemClick(View v, int position);
@@ -101,8 +42,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         Log.v(TAG2, "setOnItemClickListener2");
     }
     //------------------Click Event------------------
-
-
     public class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public ImageView tag_1;
@@ -117,7 +56,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             super(v);
             Log.v(TAG2, "MyViewHolder5");
 
-
             tag_1 = v.findViewById(R.id.main_ImgV_tag1);
             tag_2 = v.findViewById(R.id.main_ImgV_tag2);
             tag_3 = v.findViewById(R.id.main_ImgV_tag3);
@@ -125,7 +63,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             name = v.findViewById(R.id.main_Text_Name);
             relation = v.findViewById(R.id.main_Text_Realtion);
             comment = v.findViewById(R.id.main_Text_Comment);
-
 
             //--------------------Click Event--------------------
             v.setOnClickListener(new View.OnClickListener() {
@@ -143,7 +80,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
                 }
             });
             //---------------------Click Event---------------------
-
         }
     }
 
@@ -197,6 +133,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         int choose5 = mDataset.get(position).getfTag5();
         ArrayList<Integer> temp = new ArrayList<Integer>();
 
+        // 불러온 데이터의 tag값이 1이면 저장 (몇개의 태그를 가졌는지 알기 위함)
+
         if(choose1 == 1){
             temp.add(1);
         }
@@ -217,8 +155,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         Log.v("Recycler", "초기 temp size : " + String.valueOf(tagTot));
         int switchNum = 0;
         switch (tagTot){ // 태그 개수에 따른 분류
+            // 저장된 태그 개수가 여러개일 때는 이미지를 중복되지 않게 띄워야 한다!
+            // 이미 앞에 불러온 태그가 이미지를 띄웠다면 다음 태그는 다음 칸에 이미지를 띄워야 한다.
 
             // 저장된 태그가 1개일 때-------------------------------------------------
+            // 해당되는 태그 이미지를 띄운다.
             case 1:
                 if(temp.get(0) == 1){
                     holder.tag_1.setImageResource(R.drawable.main_spinner_tag1);
@@ -239,6 +180,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
                 break;
 
             // 저장된 태그가 2개일 때-------------------------------------------------
+            //
             case 2:
                 Log.v("Recycler", "태그 2개일 때 >> 이름 : " + mDataset.get(position).getfName() + " Temp size : " + temp.size() + " Temp 최초값 : " + temp);
                 if(temp.get(0) == 1){
@@ -441,6 +383,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
         //2020.12.31. 태현. / 민우
         Glide.with(context).load("http://" + macIP + ":8080/mypeople/"+ mDataset.get(position).getfImage()).into(holder.photo);
+
         holder.name.setText(mDataset.get(position).getfName());
         holder.relation.setText(mDataset.get(position).getfRelation());
         holder.comment.setText(mDataset.get(position).getfComment());
@@ -450,10 +393,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     @Override
     public int getItemCount() {
         Log.v(TAG2, "getItemCount3");
-
-//        if(mDataset == null){
-//            return filteredList.size();
-//        }
 
         return mDataset.size();
     }
